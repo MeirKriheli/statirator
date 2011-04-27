@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='statirator',
@@ -11,6 +11,7 @@ setup(
     description='Multilingual static site and blog generator',
     long_description=open('README.rst').read(),
     install_requires = [
+        'setuptools',
         'pysignals',
         'PyYAML',
         'Jinja2',
