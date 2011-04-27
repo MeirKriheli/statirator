@@ -11,3 +11,6 @@ class TestSiteConfig(unittest.TestCase):
         self.assertFalse(cfg.is_multilingual)
         self.assertEqual(cfg.lanauges, 'en')
         self.assertEqual(cfg.multilinugal_scheme, 'path')
+
+        self.assertEqual(cfg.base_domain, 'example.com')
+        self.assertEqual(cfg.site_name, 'Example')
