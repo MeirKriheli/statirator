@@ -1,4 +1,4 @@
 Statirator
 ============
 
-Multilinugal static site and blog generator.
+Multilingual static site and blog generator.
