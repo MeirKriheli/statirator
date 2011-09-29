@@ -15,5 +15,10 @@ setup(
         'docutils',
         'Pygments',
         'tornado',
-    ]
+    ],
+    entry_points = {
+        'console_scripts': [
+            'statirator = statirator.main:main',
+        ]
+    }
 )
