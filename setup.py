@@ -12,10 +12,8 @@ setup(
     long_description=open('README.rst').read(),
     install_requires = [
         'setuptools',
-        'pysignals',
-        'PyYAML',
-        'Jinja2',
         'docutils',
         'Pygments',
+        'tornado',
     ]
 )
