@@ -4,11 +4,12 @@ import os
 class Site(object):
     """Site object"""
 
-    def __init__(self, root_dir='.', build_dir='_build',
-            ignore_starting_with='_', templates_dir='_templates'):
+    def __init__(self, root='.', source='_source', build='_build',
+            templates='_templates', ignore_starting_with='_'):
         """Defines the basic site object"""
 
-        self.root_dir = os.path.abspath(root_dir)
-        self.build_dir = build_dir
+        self.root = os.path.abspath(root)
+        self.source = source
+        self.build = build
         self.ignore_starting_with = ignore_starting_with
-        self.templates_dir = templates_dir
+        self.templates = templates
