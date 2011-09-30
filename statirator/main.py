@@ -11,6 +11,8 @@ def create_options():
 
     options.define('name', default='Default site', group='Init options',
         help='Site name and title')
+    options.define('site_class', default='statirator.site.Html5Site',
+            group='Init options', help='The base class for the site')
     options.define('source', default='source', group='Init options',
         help="Site's source directory")
     options.define('build', default='build', group='Init options',

@@ -1,33 +1,37 @@
 """Handles cli arguments"""
+from __future__ import absolute_import
+from .errors import show_error
 from tornado import template
 import logging
 import sys
 import os
 
-def _show_error(options, message, show_help=True, exit=True):
-    """Helper to show error and exit"""
-
-    logging.error(message)
-
-    if show_help:
-        options.print_help()
-
-    if exit:
-        sys.exit(1)
-
 def init(args, options):
     """Create the initial site, populating code and templates"""
 
     if len(args) != 2:
-        _show_error(options, 'init takes a single argument: dir name')
-
-    root_dir = args[1]
-
-    if os.path.exists(root_dir):
-        _show_error(options, '{0} already exists, aborting'.format(root_dir),
-                show_help=False)
+        show_error('init takes a single argument: dir name')
 
     opts = options.options
+
+    site_module, site_class = opts.site_class.rsplit('.', 1)
+    try:
+        imported_module = __import__(site_module, globals(), locals(), [site_class])
+    except ImportError, e:
+        show_error(str(e), show_help=False)
+
+    try:
+        cls = getattr(imported_module, site_class)
+    except AttributeError, e:
+        show_error(str(e), show_help=False)
+
+    site = cls(name=opts.name, root=args[1], source=opts.source, build=opts.build)
+    site.create()
+
+    if os.path.exists(root_dir):
+        show_error('{0} already exists, aborting'.format(root_dir),
+                show_help=False)
+
 
     logging.info('Creating "%s" at %s', opts.name, root_dir)
     os.makedirs(root_dir)
@@ -49,7 +53,7 @@ def init(args, options):
         logging.info('\tCreating %s directory', target_dir)
         os.makedirs(os.path.join(root_dir, target_dir))
 
-    _show_error(options, 'Not implemented', show_help=False)
+    show_error('Not implemented', show_help=False)
 
 def compile(args, options):
     """Compile the site"""
