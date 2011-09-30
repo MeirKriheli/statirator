@@ -15,8 +15,6 @@ def create_options():
         help="Site's source directory")
     options.define('build', default='build', group='Init options',
         help="Site's build directory")
-    options.define('templates', default='templates', group='Init options',
-        help="Site's templates directory")
 
 def main():
     create_options()

@@ -39,12 +39,13 @@ def init(args, options):
     loader = template.Loader(os.path.join(_CURR_DIR, 'templates'))
     config_tmpl = loader.load('site_config.py.tmpl')
     output = config_tmpl.generate(name=opts.name, source=opts.source,
-            build=opts.build, templates=opts.templates)
+            build=opts.build)
     with open(os.path.join(root_dir, 'config.py'), 'w') as config_file:
         config_file.write(output)
 
     # now create the site directories
-    for target_dir in (opts.source, opts.build, opts.templates):
+    for target_dir in (opts.source, opts.build,
+            os.path.join(opts.source, '_templates')):
         logging.info('\tCreating %s directory', target_dir)
         os.makedirs(os.path.join(root_dir, target_dir))
 
