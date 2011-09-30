@@ -23,23 +23,29 @@ def init(args, options):
 
     root_dir = args[1]
 
-    #if os.path.exists(root_dir):
-    #    _show_error(options, '{0} already exists, aborting'.format(root_dir),
-    #            show_help=False)
+    if os.path.exists(root_dir):
+        _show_error(options, '{0} already exists, aborting'.format(root_dir),
+                show_help=False)
 
-    #os.makedirs(root_dir)
+    logging.info("Creating %s", root_dir)
+    os.makedirs(root_dir)
 
     _CURR_DIR = os.path.abspath(os.path.dirname(__file__))
-    _CONF_TEMPLATE = 'site_config.py'
+
+    logging.info("\tCreating config.py from template")
 
     loader = template.Loader(os.path.join(_CURR_DIR, 'templates'))
-
-    config_tmpl = loader.load('{0}.tmpl'.format(_CONF_TEMPLATE))
+    config_tmpl = loader.load('site_config.py.tmpl')
     opts = options.options
     output = config_tmpl.generate(name=opts.name, source=opts.source,
             build=opts.build, templates=opts.templates)
-    with open(os.path.join(root_dir, _CONF_TEMPLATE), 'w') as config_file:
+    with open(os.path.join(root_dir, 'config.py'), 'w') as config_file:
         config_file.write(output)
+
+    # now create the site directories
+    for target_dir in (opts.source, opts.build, opts.templates):
+        logging.info('\tCreating %s directory', target_dir)
+        os.makedirs(os.path.join(root_dir, target_dir))
 
     _show_error(options, 'Not implemented', show_help=False)
 

@@ -11,11 +11,11 @@ def create_options():
 
     options.define('name', default='Default site', group='Init options',
         help='Site name and title')
-    options.define('source', default='_source', group='Init options',
+    options.define('source', default='source', group='Init options',
         help="Site's source directory")
-    options.define('build', default='_build', group='Init options',
+    options.define('build', default='build', group='Init options',
         help="Site's build directory")
-    options.define('templates', default='_templates', group='Init options',
+    options.define('templates', default='templates', group='Init options',
         help="Site's templates directory")
 
 def main():
