@@ -1,10 +1,8 @@
 """Handles cli arguments"""
 from __future__ import absolute_import
 from .errors import show_error
-from tornado import template
 import logging
 import sys
-import os
 
 def init(args, options):
     """Create the initial site, populating code and templates"""
