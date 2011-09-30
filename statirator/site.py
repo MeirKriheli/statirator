@@ -4,10 +4,11 @@ import os
 class Site(object):
     """Site object"""
 
-    def __init__(self, root='.', source='_source', build='_build',
-            templates='_templates', ignore_starting_with='_'):
+    def __init__(self, name='Default', root='.', source='_source',
+            build='_build', templates='_templates', ignore_starting_with='_'):
         """Defines the basic site object"""
 
+        self.name = name
         self.root = os.path.abspath(root)
         self.source = source
         self.build = build
