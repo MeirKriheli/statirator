@@ -27,7 +27,9 @@ def init(args, options):
         _show_error(options, '{0} already exists, aborting'.format(root_dir),
                 show_help=False)
 
-    logging.info("Creating %s", root_dir)
+    opts = options.options
+
+    logging.info('Creating "%s" at %s', opts.name, root_dir)
     os.makedirs(root_dir)
 
     _CURR_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -36,7 +38,6 @@ def init(args, options):
 
     loader = template.Loader(os.path.join(_CURR_DIR, 'templates'))
     config_tmpl = loader.load('site_config.py.tmpl')
-    opts = options.options
     output = config_tmpl.generate(name=opts.name, source=opts.source,
             build=opts.build, templates=opts.templates)
     with open(os.path.join(root_dir, 'config.py'), 'w') as config_file:
