@@ -31,9 +31,6 @@ def main():
     cmd = getattr(commands, args[0])
     cmd(args, options)
 
-    if args[0] == 'init' and len(args) != 2:
-        logging.error('init takes a single argument: dir name')
-        options.print_help()
 
 if __name__ == '__main__':
     main()
