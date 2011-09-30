@@ -1,0 +1,12 @@
+from statirator.site import Site
+import os
+
+SITE_OPTS = {
+    'root': os.path.abspath(os.path.dirname(__name__)),
+    'name': '{{name}}',
+    'source': '{{source}}',
+    'build': '{{ build }}',
+    'templates', '{{ tempaltes }}',
+}
+
+site = Site(**SITE_OPTS)
