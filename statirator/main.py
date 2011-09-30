@@ -1,7 +1,10 @@
+from __future__ import absolute_import
 from tornado import options
+from . import commands
 import logging
+import sys
 
-VALID_ARGS = ('init', 'build', 'serve')
+VALID_ARGS = ('init', 'compile', 'serve')
 
 def create_options():
     "Add options to tornado"
@@ -23,6 +26,10 @@ def main():
         valid_opts = ', '.join(VALID_ARGS)
         logging.error('Invalid option. Valid options are {0}'.format(valid_opts))
         options.print_help()
+        sys.exit(1)
+
+    cmd = getattr(commands, args[0])
+    cmd(args, options)
 
     if args[0] == 'init' and len(args) != 2:
         logging.error('init takes a single argument: dir name')
