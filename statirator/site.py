@@ -68,13 +68,13 @@ class Site(object):
 
 class Html5Site(Site):
     """Basic Html5 site . Create:
-    
+
     - Basic _site.html template
     - Modernizr
     - normalize.css
 
     """
-    
+
     NORMALIZE = 'https://raw.github.com/necolas/normalize.css/master/normalize.css'
 
     def create(self):
@@ -83,6 +83,7 @@ class Html5Site(Site):
         super(Html5Site, self).create()
         self.get_css()
         self.create_js()
+        self.copy_templates()
 
     def get_css(self):
         "create the css dir, and download normalize"
@@ -114,3 +115,14 @@ class Html5Site(Site):
         modernizr = os.path.join(self.source_templates_dir, 'html5',
                 'modernizr.js')
         shutil.copy(modernizr, js_dir)
+
+    def copy_templates(self):
+        """Create dir and copy initial html templates"""
+
+        logging.info('Creating _templates dir and copying templates')
+        target_dir = os.path.join(self.root, self.source, '_templates')
+        os.makedirs(target_dir)
+
+        source_dir = os.path.join(self.source_templates_dir, 'html5')
+
+        shutil.copy(os.path.join(source_dir, 'site.html'), target_dir)
