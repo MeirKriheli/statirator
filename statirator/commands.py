@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from .errors import show_error
 import logging
 import sys
+import os
 
 def init(args, options):
     """Create the initial site, populating code and templates"""
@@ -26,11 +27,20 @@ def init(args, options):
     site = cls(name=opts.name, root=args[1], source=opts.source, build=opts.build)
     site.create()
 
-def compile(args, options):
-    """Compile the site"""
+def _site_site_from_config():
 
-    logging.error('Not implemented')
-    sys.exit(1)
+    sys.path.append(os.path.abspath(os.getcwd()))
+    from config import site
+
+    return site
+
+def compile(args, options):
+    """Compile the site.
+    
+    should be run from site's root (location of config.py)"""
+
+    site = _site_site_from_config()
+    site.compile()
 
 def serve(args, options):
     """Serve the site"""

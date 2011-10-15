@@ -2,6 +2,7 @@
 *.pyo
 *.egg-info
 .installed.cfg
+.ropeproject
 bin/
 develop-eggs/
 parts/

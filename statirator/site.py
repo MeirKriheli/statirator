@@ -13,8 +13,8 @@ import os
 SITE_OPTS = {
     'root': os.path.abspath(os.path.dirname(__file__)),
     'name': '{{name}}',
-    'source': '{{source}}',
-    'build': '{{ build }}',
+    'source': '{{source}}',  # relative to build or absolute
+    'build': '{{ build }}',  # relative to build or absolute
 }
 
 site = {{ class_name }}(**SITE_OPTS)
@@ -29,8 +29,8 @@ class Site(object):
 
         self.name = name
         self.root = os.path.abspath(root)
-        self.source = source
-        self.build = build
+        self.source = os.path.abspath(os.path.join(root, source))
+        self.build = os.path.abspath(os.path.join(build))
         self.ignore_starting_with = ignore_starting_with
 
         self.source_templates_dir = os.path.abspath(os.path.join(
@@ -64,6 +64,25 @@ class Site(object):
         # create the source directory
         logging.info("Creating source directory (%s)", self.source)
         os.makedirs(os.path.join(self.root, self.source))
+
+    def walk_site(self):
+        """Walks the site's source dir yielding assets"""
+
+        to_ignore = self.ignore_starting_with
+
+        for root, dirs, assets in os.walk(self.source):
+            dirs[:] = [d for d in dirs if not d.startswith(to_ignore)]
+
+            for asset in assets:
+                if not asset.startswith(to_ignore):
+                    yield os.path.relpath(root, self.source), asset
+
+
+    def compile(self):
+        """Compiles the site from source to build dir"""
+
+        for asset_dir, asset in self.walk_site():
+            logging.debug('%s - %s', asset_dir, asset)
 
 
 class Html5Site(Site):
