@@ -17,7 +17,6 @@ def init(args):
     except AttributeError as e:
         logging.error(e)
 
-    print(args)
     site = cls(name=args.name, root=args.directory,
             source=args.source, build=args.build)
     site.create()
