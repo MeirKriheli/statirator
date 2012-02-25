@@ -10,14 +10,16 @@ def init(args):
     try:
         imported_module = __import__(site_module, globals(), locals(), [site_class])
     except ImportError as e:
-        logging.error(str(e), show_help=False)
+        logging.error(e)
 
     try:
         cls = getattr(imported_module, site_class)
     except AttributeError as e:
-        logging.error(str(e), show_help=False)
+        logging.error(e)
 
-    site = cls(name=opts.name, root=args[1], source=opts.source, build=opts.build)
+    print(args)
+    site = cls(name=args.name, root=args.directory,
+            source=args.source, build=args.build)
     site.create()
 
 def _site_site_from_config():

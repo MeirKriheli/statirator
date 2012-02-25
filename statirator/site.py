@@ -1,6 +1,5 @@
 "Site definition"
 
-from tornado import template, httpclient
 from collections import defaultdict, deque
 import logging
 import shutil
@@ -45,8 +44,7 @@ class Site(object):
         """Create the initial site"""
 
         if os.path.exists(self.root):
-            logging.error('{0} already exists, aborting'.format(self.root),
-                    show_help=False)
+            logging.error('{0} already exists, aborting'.format(self.root))
 
         logging.info('Creating "%s" at %s', self.name, self.root)
         os.makedirs(self.root)
