@@ -1,36 +1,31 @@
-from __future__ import absolute_import
-from tornado import options
+import argparse
 from . import commands
-import logging
-import sys
 
 VALID_ARGS = ('init', 'compile', 'serve')
 
 def create_options():
     "Add options to tornado"
+    
+    parser = argparse.ArgumentParser(
+            'Staitrator - Static multilingual site and blog generator')
 
-    options.define('name', default='Default site', group='Init options',
-        help='Site name and title')
-    options.define('site_class', default='statirator.site.Html5Site',
-            group='Init options', help='The base class for the site')
-    options.define('source', default='source', group='Init options',
-        help="Site's source directory")
-    options.define('build', default='build', group='Init options',
-        help="Site's build directory")
+    parser.add_argument('command', choices=VALID_ARGS)
+    init = parser.add_argument_group('Init Options')
+    init.add_argument('-n', '--name', default='Default site',
+            help='Site name and title')
+    init.add_argument('-c', '--site_class', default='statirator.site.Html5Site',
+            help='The base class for the site')
+    init.add_argument('-s', '--source', default='source', help="Site's source directory")
+    init.add_argument('-b', '--build', default='build', help="Site's build directory")
+
+    return parser
 
 def main():
-    create_options()
-    args = options.parse_command_line()
-
-    if not args or args[0] not in VALID_ARGS:
-        valid_opts = ', '.join(VALID_ARGS)
-        logging.error('Invalid option. Valid options are {0}'.format(valid_opts))
-        options.print_help()
-        sys.exit(1)
+    parser = create_options()
+    args = parser.parse_args()
 
     cmd = getattr(commands, args[0])
-    cmd(args, options)
-
+    cmd(args)
 
 if __name__ == '__main__':
     main()
