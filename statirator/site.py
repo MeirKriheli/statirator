@@ -2,6 +2,7 @@
 from __future__ import absolute_import
 from .errors import show_error
 from tornado import template, httpclient
+from collections import defaultdict, deque
 import logging
 import shutil
 import os
@@ -15,6 +16,7 @@ SITE_OPTS = {
     'name': '{{name}}',
     'source': '{{source}}',  # relative to build or absolute
     'build': '{{ build }}',  # relative to build or absolute
+    'languages': ['he', 'en'],  #  First language is default
 }
 
 site = {{ class_name }}(**SITE_OPTS)
@@ -24,17 +26,21 @@ class Site(object):
     """Basic Site object, creates the config file and an empty source dir"""
 
     def __init__(self, name='Default', root='.', source='source', build='build',
+            languages=None, prefix_default_lang=False,
             ignore_starting_with='_'):
         """Defines the basic site object"""
 
         self.name = name
         self.root = os.path.abspath(root)
         self.source = os.path.abspath(os.path.join(root, source))
-        self.build = os.path.abspath(os.path.join(build))
+        self.build = os.path.abspath(os.path.join(root, build))
         self.ignore_starting_with = ignore_starting_with
+        self.languages = languages
 
         self.source_templates_dir = os.path.abspath(os.path.join(
             os.path.dirname(__file__), 'templates'))
+
+        self.db = None
 
     def create(self):
         """Create the initial site"""
@@ -77,10 +83,10 @@ class Site(object):
                 if not asset.startswith(to_ignore):
                     yield os.path.relpath(root, self.source), asset
 
-
     def compile(self):
         """Compiles the site from source to build dir"""
 
+        self.db = defaultdict(deque)
         for asset_dir, asset in self.walk_site():
             logging.debug('%s - %s', asset_dir, asset)
 
