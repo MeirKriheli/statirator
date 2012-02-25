@@ -1,5 +1,5 @@
 "Site definition"
-from __future__ import absolute_import
+
 from tornado import template, httpclient
 from collections import defaultdict, deque
 import logging
@@ -124,7 +124,7 @@ class Html5Site(Site):
             response = http_client.fetch(self.NORMALIZE)
             with open(os.path.join(css_dir, 'normalize.css'), 'w') as css_file:
                 css_file.write(response.body)
-        except httpclient.HTTPError, e:
+        except httpclient.HTTPError as e:
             logging.error("Error getting normalize.css: {0}".format(e))
 
     def create_js(self):
