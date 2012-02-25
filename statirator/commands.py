@@ -18,7 +18,8 @@ def init(args):
         logging.error(e)
 
     site = cls(name=args.name, root=args.directory,
-            source=args.source, build=args.build)
+            source=args.source, build=args.build,
+            languages=args.languages)
     site.create()
 
 def _site_site_from_config():

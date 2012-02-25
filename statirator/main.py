@@ -20,6 +20,10 @@ def create_options():
     init.add_argument('-b', '--build', default='build',
             help="Site's build directory [default: %(default)s]")
 
+    init.add_argument('-l', '--languages', nargs='*', dest='languages',
+            default=['he', 'en'], help='Supported languages.'
+                ' [default: %(default)s]')
+
     init.set_defaults(func=commands.init)
 
     generate =  sub_parsers.add_parser('generate', help='Generate the site')

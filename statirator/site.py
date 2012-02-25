@@ -18,10 +18,11 @@ SITE_OPTS = {
     'name': '{{name}}',
     'source': '{{source}}',  # relative to build or absolute
     'build': '{{ build }}',  # relative to build or absolute
-    'languages': ['he', 'en'],  #  First language is default
+    'languages': {{ languages }},  #  First language is default
 }
 
 site = {{ class_name }}(**SITE_OPTS)
+
 """
 
 class Site(object):
@@ -64,6 +65,7 @@ class Site(object):
             'build': self.build,
             'import_path': self.__module__,
             'class_name': self.__class__.__name__,
+            'languages': self.languages
         }
 
         # jinja2's dump causes an error with py3, let's do it ourself
