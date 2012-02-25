@@ -3,15 +3,10 @@ import logging
 import sys
 import os
 
-def init(args, options):
+def init(args):
     """Create the initial site, populating code and templates"""
 
-    if len(args) != 2:
-        logging.error('init takes a single argument: dir name')
-
-    opts = options.options
-
-    site_module, site_class = opts.site_class.rsplit('.', 1)
+    site_module, site_class = args.site_class.rsplit('.', 1)
     try:
         imported_module = __import__(site_module, globals(), locals(), [site_class])
     except ImportError as e:
@@ -32,15 +27,15 @@ def _site_site_from_config():
 
     return site
 
-def compile(args, options):
-    """Compile the site.
+def generate(args):
+    """generate the site.
     
     should be run from site's root (location of config.py)"""
 
     site = _site_site_from_config()
     site.compile()
 
-def serve(args, options):
+def serve(args):
     """Serve the site"""
 
     logging.error('Not implemented')

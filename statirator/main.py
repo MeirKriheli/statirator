@@ -20,9 +20,14 @@ def create_options():
     init.add_argument('-b', '--build', default='build',
             help="Site's build directory [default: %(default)s]")
 
-    cmpl =  sub_parsers.add_parser('compile', help='Compile the new site')
+    init.set_defaults(func=commands.init)
+
+    generate =  sub_parsers.add_parser('generate', help='Generate the site')
+    generate.set_defaults(func=commands.generate)
+
     serve =  sub_parsers.add_parser('serve', help='Serve the site, listening '
             'on a local port')
+    serve.set_defaults(func=commands.serve)
 
     return parser
 
@@ -30,8 +35,7 @@ def main():
     parser = create_options()
     args = parser.parse_args()
 
-    cmd = getattr(commands, args[0])
-    cmd(args)
+    args.func(args)
 
 if __name__ == '__main__':
     main()
