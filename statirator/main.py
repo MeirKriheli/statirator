@@ -1,22 +1,28 @@
 import argparse
 from . import commands
 
-VALID_ARGS = ('init', 'compile', 'serve')
-
 def create_options():
     "Add options to tornado"
     
     parser = argparse.ArgumentParser(
             'Staitrator - Static multilingual site and blog generator')
 
-    parser.add_argument('command', choices=VALID_ARGS)
-    init = parser.add_argument_group('Init Options')
+    sub_parsers = parser.add_subparsers(help='Sub Commands help')
+    init = sub_parsers.add_parser('init', help='Initiate a new site')
+
+    init.add_argument('directory', help='Target directory')
     init.add_argument('-n', '--name', default='Default site',
-            help='Site name and title')
+            help='Site name and title [default: %(default)s]')
     init.add_argument('-c', '--site_class', default='statirator.site.Html5Site',
-            help='The base class for the site')
-    init.add_argument('-s', '--source', default='source', help="Site's source directory")
-    init.add_argument('-b', '--build', default='build', help="Site's build directory")
+            help='The base class for the site [default: %(default)s]')
+    init.add_argument('-s', '--source', default='source',
+            help="Site's source directory [default: %(default)s]")
+    init.add_argument('-b', '--build', default='build',
+            help="Site's build directory [default: %(default)s]")
+
+    cmpl =  sub_parsers.add_parser('compile', help='Compile the new site')
+    serve =  sub_parsers.add_parser('serve', help='Serve the site, listening '
+            'on a local port')
 
     return parser
 
