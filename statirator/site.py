@@ -1,6 +1,5 @@
 "Site definition"
 from __future__ import absolute_import
-from .errors import show_error
 from tornado import template, httpclient
 from collections import defaultdict, deque
 import logging
@@ -46,7 +45,7 @@ class Site(object):
         """Create the initial site"""
 
         if os.path.exists(self.root):
-            show_error('{0} already exists, aborting'.format(self.root),
+            logging.error('{0} already exists, aborting'.format(self.root),
                     show_help=False)
 
         logging.info('Creating "%s" at %s', self.name, self.root)
@@ -126,7 +125,7 @@ class Html5Site(Site):
             with open(os.path.join(css_dir, 'normalize.css'), 'w') as css_file:
                 css_file.write(response.body)
         except httpclient.HTTPError, e:
-            show_error("Error getting normalize.css: {0}".format(e))
+            logging.error("Error getting normalize.css: {0}".format(e))
 
     def create_js(self):
         """Create js and download modernizr"""
