@@ -19,6 +19,7 @@ SITE_OPTS = {
     'source': '{{source}}',  # relative to build or absolute
     'build': '{{ build }}',  # relative to build or absolute
     'languages': {{ languages }},  #  First language is default
+    'prefix_default_lang': False, # should default language be in a sub dir ?
 }
 
 site = {{ class_name }}(**SITE_OPTS)

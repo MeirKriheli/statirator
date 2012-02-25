@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{{ LANGUAGE_DIR }}">
 <head>
     <meta charset="utf-8"/>
     <title>{% block title %}{% end %} - {{ site.name }}</title>
@@ -10,7 +10,7 @@
 </head>
 <body class="no-js">
     <header><h1>{{ site.name }}</h1></header>
-    <div>{% block content %}{% end %}</div>
+    <section>{% block content %}{% end %}</section>
     <footer>footer goes here</footer>
 </body>
 </html>
