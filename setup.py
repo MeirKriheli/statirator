@@ -15,11 +15,17 @@ setup(
         'setuptools',
         'docutils',
         'Pygments',
-        'tornado',
+        'jinja2',
     ],
     entry_points = {
         'console_scripts': [
             'statirator = statirator.main:main',
         ]
-    }
+    },
+    classifiers = [
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Operating System :: OS Independent',
+    ]
 )
