@@ -22,7 +22,7 @@ def init(args):
             languages=args.languages)
     site.create()
 
-def _site_site_from_config():
+def _site_from_config():
 
     sys.path.append(os.path.abspath(os.getcwd()))
     from config import site
@@ -34,8 +34,8 @@ def generate(args):
     
     should be run from site's root (location of config.py)"""
 
-    site = _site_site_from_config()
-    site.compile()
+    site = _site_from_config()
+    site.generate()
 
 def serve(args):
     """Serve the site"""

@@ -89,7 +89,7 @@ class Site(object):
                 if not asset.startswith(to_ignore):
                     yield os.path.relpath(root, self.source), asset
 
-    def compile(self):
+    def generate(self):
         """Compiles the site from source to build dir"""
 
         self.db = defaultdict(deque)
