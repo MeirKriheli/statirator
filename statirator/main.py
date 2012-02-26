@@ -19,6 +19,8 @@ def create_options():
     init.add_argument('directory', help='Target directory')
     init.add_argument('-n', '--name', default='Default site',
             help='Site name and title [Default: %(default)s]')
+    init.add_argument('-d', '--domain', default='example.com',
+            help="Domain name [Default: %(default)s]")
     init.add_argument('-c', '--site_class', default='statirator.site.Html5Site',
             help='The base class for the site [Default: %(default)s]')
     init.add_argument('-s', '--source', default='source',

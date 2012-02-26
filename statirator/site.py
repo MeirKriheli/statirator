@@ -18,6 +18,7 @@ import os
 SITE_OPTS = {
     'root': os.path.abspath(os.path.dirname(__file__)),
     'name': '{{name}}',
+    'domain': '{{domain}}',
     'source': '{{source}}',  # relative to build or absolute
     'build': '{{ build }}',  # relative to build or absolute
     'languages': {{ languages }},  #  First language is default
@@ -31,7 +32,8 @@ site = {{ class_name }}(**SITE_OPTS)
 class Site(object):
     """Basic Site object, creates the config file and an empty source dir"""
 
-    def __init__(self, name='Default', root='.', source='source', build='build',
+    def __init__(self, name='Default', domain='example.com', root='.',
+            source='source', build='build',
             languages=None, prefix_default_lang=False,
             ignore_starting_with='_', **kwargs):
         """Defines the basic site object"""
@@ -39,6 +41,7 @@ class Site(object):
         self.name = name
         self.root = os.path.abspath(root)
         self.source = os.path.abspath(os.path.join(root, source))
+        self.domain = domain
         self.build = os.path.abspath(os.path.join(root, build))
         self.ignore_starting_with = ignore_starting_with
         self.languages = languages
@@ -66,6 +69,7 @@ class Site(object):
         context = {
             'name': self.name,
             'source': self.source,
+            'domain': self.domain,
             'build': self.build,
             'import_path': self.__module__,
             'class_name': self.__class__.__name__,
