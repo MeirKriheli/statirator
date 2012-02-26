@@ -33,7 +33,7 @@ class Site(object):
 
     def __init__(self, name='Default', root='.', source='source', build='build',
             languages=None, prefix_default_lang=False,
-            ignore_starting_with='_'):
+            ignore_starting_with='_', **kwargs):
         """Defines the basic site object"""
 
         self.name = name
@@ -42,6 +42,7 @@ class Site(object):
         self.build = os.path.abspath(os.path.join(root, build))
         self.ignore_starting_with = ignore_starting_with
         self.languages = languages
+        self.options = kwargs
 
         self.source_templates_dir = os.path.abspath(os.path.join(
             os.path.dirname(__file__), 'templates'))
