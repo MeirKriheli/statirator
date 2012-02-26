@@ -1,11 +1,13 @@
 "Site definition"
 
 import os
+import re
 import sys
-import shutil
 import logging
 import urllib.request
 import urllib.error
+import zipfile
+import tempfile
 from collections import defaultdict, deque
 from jinja2 import Template
 
@@ -100,59 +102,59 @@ class Site(object):
 class Html5Site(Site):
     """Basic Html5 site . Create:
 
+    - zurb foundation
     - Basic _site.html template
-    - Modernizr
-    - normalize.css
 
     """
 
-    NORMALIZE = 'https://raw.github.com/necolas/normalize.css/master/normalize.css'
+    FOUNDATION = 'http://foundation.zurb.com/files/foundation-download-2.2.zip'
 
     def create(self):
         """Extra create elements"""
 
         super(Html5Site, self).create()
-        self.get_css()
-        self.create_js()
-        self.copy_templates()
+        self.get_zurb_foundation()
 
-    def get_css(self):
-        "create the css dir, and download normalize"
-
-        logging.info('Creating css directory')
-        css_dir = os.path.join(self.root, self.source, 'css')
-
-        os.makedirs(css_dir)
-
-        logging.info('Getting normalize.css')
-
+    def get_zurb_foundation(self):
+        logging.info('Getting zurb foundation')
         try:
-            normalize = urllib.request.urlopen(self.NORMALIZE)
-            with open(os.path.join(css_dir, 'normalize.css'), 'w') as css_file:
-                css_file.write(normalize.read().decode('utf-8'))
+            archive_req = urllib.request.urlopen(self.FOUNDATION)
+            archive_file = tempfile.TemporaryFile()
+            archive_file.write(archive_req.read())
+            logging.info('extracting zurb foundation')
+            with zipfile.ZipFile(archive_file) as foundation:
+                foundation.extractall(self.source)
+            self.customize_foundation()
         except urllib.error.HTTPError as e:
-            logging.error("Error getting normalize.css: {0}".format(e))
+            logging.error("Error getting zurb foundation: {0}".format(e))
 
-    def create_js(self):
-        """Create js and download modernizr"""
+    def customize_foundation(self):
+        logging.info('Converting foundation to jinja templates')
 
-        logging.info('Creating js directory')
-        js_dir = os.path.join(self.root, self.source, 'js')
-
-        os.makedirs(js_dir)
-
-        logging.info('Copying modernizr.js')
-        modernizr = os.path.join(self.source_templates_dir, 'html5',
-                'modernizr.js')
-        shutil.copy(modernizr, js_dir)
-
-    def copy_templates(self):
-        """Create dir and copy initial html templates"""
-
-        logging.info('Creating _templates dir and copying templates')
-        target_dir = os.path.join(self.root, self.source, '_templates')
+        # create the templates dir
+        target_dir = os.path.join(self.source, '_templates')
         os.makedirs(target_dir)
 
-        source_dir = os.path.join(self.source_templates_dir, 'html5')
+        index = os.path.join(self.source, 'index.html')
+        # read index.html
+        with open(index) as index_html:
+            orig_content = index_html.read()
 
-        shutil.copy(os.path.join(source_dir, 'site.html'), target_dir)
+        template_content = orig_content.replace('lang="en"',
+                'lang="{{ LANGUAGE_CODE }}" dir="{{ LANGUAGE_DIR }}"')
+
+        template_content = re.sub('<title>[^<]+<',
+            '<title>{% block title %}{% endblock %} - {{ site.name }}<', template_content)
+        template_content = re.sub(r'<!-- container -->.*?<!-- container -->',
+                '{% block content %}{% endblock %}', template_content, re.S)
+
+        parts = re.split(r'\s*<!-- container -->\s*', template_content)
+        parts[1:2] = [
+            '\t<header><h1>{{ site.name }}</h1></header>',
+            '{% block content %}{% endblock %}',
+            '\t<footer>Generated with Statirator</footer>'
+        ]
+        template_content = '\n'.join(parts)
+
+        with open(os.path.join(target_dir, 'site.html'), 'w') as site_tmpl:
+            site_tmpl.write(template_content)
