@@ -149,6 +149,8 @@ class Html5Site(Site):
                 '{% block content %}{% endblock %}', template_content, re.S)
 
         parts = re.split(r'\s*<!-- container -->\s*', template_content)
+        index_content = parts[1]
+
         parts[1:2] = [
             '\t<header><h1>{{ site.name }}</h1></header>',
             '{% block content %}{% endblock %}',
@@ -158,3 +160,12 @@ class Html5Site(Site):
 
         with open(os.path.join(target_dir, 'site.html'), 'w') as site_tmpl:
             site_tmpl.write(template_content)
+
+        parts = [
+            '{% extends "site.html" %}',
+            '{% block content %}',
+            index_content,
+            '{% endblock %}',
+        ]
+        with open(index, 'w') as index_html:
+            index_html.write('\n'.join(parts))
