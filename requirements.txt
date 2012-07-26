@@ -1,0 +1,5 @@
+Jinja2==2.6
+Pygments==1.5
+distribute==0.6.24
+docutils==0.9.1
+html5writer==0.1
