@@ -16,6 +16,10 @@ setup(
         'docutils',
         'Pygments',
         'jinja2',
+        'html5writer',
+    ],
+    dependency_links = [
+        'https://github.com/MeirKriheli/rst-to-semantic-html5/tarball/master#egg=html5writer',
     ],
     entry_points = {
         'console_scripts': [
