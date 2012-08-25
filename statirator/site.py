@@ -18,21 +18,26 @@ import os
 SITE_OPTS = {
     'root': os.path.abspath(os.path.dirname(__file__)),
     'name': '{{name}}',
-    'domain': '{{domain}}',
+    'domain': '{{domain}}',  # If a single domain, means that each lanugage
+                             # goes into a subfolder, otherwise, specify a dict
+                             # with the 'lang': 'domain' for each language
     'source': '{{source}}',  # relative to build or absolute
     'build': '{{ build }}',  # relative to build or absolute
     'languages': {{ languages }},  #  First language is default
-    'prefix_default_lang': False, # should default language be in a sub dir ?
+    'prefix_default_lang': False,  # should default language be in a sub dir (in
+                                   #  case of a single domain)?
 }
 
 site = {{ class_name }}(**SITE_OPTS)
 
 """
 
+
 class Site(object):
     """Basic Site object, creates the config file and an empty source dir"""
 
-    def __init__(self, name='Default', domain='example.com', root='.',
+    def __init__(
+            self, name='Default', domain='example.com', root='.',
             source='source', build='build',
             languages=None, prefix_default_lang=False,
             ignore_starting_with='_', **kwargs):
@@ -145,13 +150,16 @@ class Html5Site(Site):
         with open(index) as index_html:
             orig_content = index_html.read()
 
-        template_content = orig_content.replace('lang="en"',
-                'lang="{{ LANGUAGE_CODE }}" dir="{{ LANGUAGE_DIR }}"')
+        template_content = orig_content.replace(
+            'lang="en"', 'lang="{{ LANGUAGE_CODE }}" dir="{{ LANGUAGE_DIR }}"')
 
-        template_content = re.sub('<title>[^<]+<',
-            '<title>{% block title %}{% endblock %} - {{ site.name }}<', template_content)
-        template_content = re.sub(r'<!-- container -->.*?<!-- container -->',
-                '{% block content %}{% endblock %}', template_content, re.S)
+        template_content = re.sub(
+            '<title>[^<]+<',
+            '<title>{% block title %}{% endblock %} - {{ site.name }}<',
+            template_content)
+        template_content = re.sub(
+            r'<!-- container -->.*?<!-- container -->',
+            '{% block content %}{% endblock %}', template_content, re.S)
 
         parts = re.split(r'\s*<!-- container -->\s*', template_content)
         index_content = parts[1]
