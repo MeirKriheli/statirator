@@ -11,25 +11,25 @@ setup(
     description='Multilingual static site and blog generator',
     long_description=open('README.rst').read(),
     zip_safe=False,
-    install_requires = [
+    install_requires=[
         'setuptools',
         'docutils',
         'Pygments',
-        'jinja2',
         'html5writer',
+        'Django==1.4.1',
+        'django-taggit',
     ],
-    dependency_links = [
+    dependency_links=[
         'https://github.com/MeirKriheli/rst-to-semantic-html5/tarball/master#egg=html5writer',
     ],
-    entry_points = {
+    entry_points={
         'console_scripts': [
             'statirator = statirator.main:main',
         ]
     },
-    classifiers = [
+    classifiers=[
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
         'Operating System :: OS Independent',
     ]
 )
