@@ -21,15 +21,18 @@ def create_options():
     init.add_argument('-n', '--name', default='Default site',
                       help='Site name and title [Default: %(default)s]')
     init.add_argument('-d', '--domain', default='example.com',
-                      help="Domain name [Default: %(default)s]")
+                      help='Domain name [Default: %(default)s]')
     init.add_argument('-s', '--source', default='source',
                       help="Site's source directory [Default: %(default)s]")
     init.add_argument('-b', '--build', default='build',
                       help="Site's build directory [Default: %(default)s]")
-
-    init.add_argument('-l', '--languages', nargs='*', dest='languages',
-                      default=['he', 'en'], help='Supported languages.'
-                      ' [Default: %(default)s]')
+    init.add_argument(
+        '-f', '--force', default=False, action='store_true',
+        help='Ignore directory creation errors and '
+        'overwrite site setting [Default: %(default)s]')
+    init.add_argument(
+        '-l', '--languages', nargs='*', dest='languages', default=['he', 'en'],
+        help='Supported languages. [Default: %(default)s]')
 
     init.set_defaults(func=commands.init)
 
