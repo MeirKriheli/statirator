@@ -29,8 +29,8 @@ def init(args):
                                     'project_template'))
     }
 
-    from django.core.management.templates import TemplateCommand
-    TemplateCommand().handle('project', 'conf', args.directory, **ctx)
+    from django.core.management import call_command
+    call_command('startproject', 'conf', args.directory, **ctx)
 
 
 def _site_from_config():
@@ -44,7 +44,7 @@ def _site_from_config():
 def generate(args):
     """generate the site.
 
-    should be run from site's root (location of config.py)"""
+    should be run from site's root (location of manage.py)"""
 
     site = _site_from_config()
     site.generate()
