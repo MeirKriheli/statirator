@@ -18,9 +18,11 @@ setup(
         'html5writer',
         'Django==1.4.1',
         'django-taggit',
+        'django-medusa',
     ],
     dependency_links=[
         'https://github.com/MeirKriheli/rst-to-semantic-html5/tarball/master#egg=html5writer',
+        'https://github.com/mtigas/django-medusa/tarball/master#egg=django-medusa',
     ],
     entry_points={
         'console_scripts': [
