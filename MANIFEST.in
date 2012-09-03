@@ -1,3 +1,4 @@
 include *.txt *.rst
 recursive-include docs *.txt *.rst
 recursive-include statirator/templates *
+recursive-include statirator/project_template *
