@@ -1,8 +1,6 @@
 """Handles cli arguments"""
-import errno
 import os
 import sys
-
 import logging
 
 
@@ -13,39 +11,26 @@ def init(args):
     #        source=args.source, build=args.build,
     #        languages=args.languages)
     #site.create()
-    logging.info("Initializing directory  %s", args.directory)
+    logging.info("Initializing project structure in  %s", args.directory)
 
-    # create the directories
-    for folder in (args.source, args.build, 'conf', 'templates', 'static'):
-        try:
-            target = os.path.join(args.directory, folder)
-            os.makedirs(target)
-        except OSError as e:
-            if e.errno != errno.EEXIST:
-                raise
-            if args.force:
-                logging.debug('Target directory %s exists, continuing as force'
-                              ' was set ', target)
-            else:
-                logging.error('Target directory %s already exist, aborting',
-                              target)
-                sys.exit(1)
+    os.makedirs(args.directory)
 
-    # template context
+    # options context
     from django.conf.global_settings import LANGUAGES
 
     ctx = {
-        'source': args.source,
         'build': args.build,
         'default_lang': args.languages[0],
         'languages': [l for l in LANGUAGES if l[0] in args.languages],
+        'verbosity': 1,
+        'extensions': ('py', ),
+        'files': (),
+        'template': os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                    'project_template'))
     }
 
-    from django.template import Context, Template
-    from django.conf import settings
-
-    settings.configure()
-    print Template(SETTINGS_TEMPLATE).render(Context(ctx))
+    from django.core.management.templates import TemplateCommand
+    TemplateCommand().handle('project', 'conf', args.directory, **ctx)
 
 
 def _site_from_config():

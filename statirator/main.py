@@ -22,8 +22,6 @@ def create_options():
                       help='Site name and title [Default: %(default)s]')
     init.add_argument('-d', '--domain', default='example.com',
                       help='Domain name [Default: %(default)s]')
-    init.add_argument('-s', '--source', default='source',
-                      help="Site's source directory [Default: %(default)s]")
     init.add_argument('-b', '--build', default='build',
                       help="Site's build directory [Default: %(default)s]")
     init.add_argument(
