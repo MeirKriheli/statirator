@@ -26,4 +26,9 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sites',
     'django.contrib.staticfiles',
+    'django_medusa',
 )
+
+MEDUSA_RENDERER_CLASS = "django_medusa.renderers.DiskStaticSiteRenderer"
+MEDUSA_MULTITHREAD = True
+MEDUSA_DEPLOY_DIR = BUILD_DIR
