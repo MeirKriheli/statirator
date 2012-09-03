@@ -7,7 +7,21 @@ ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 SOURCE_DIR = os.path.join(ROOT_DIR, '{{ source }}')
 BUILD_DIR = os.path.join(ROOT_DIR, '{{ build }}')
 
-# languages setup
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
+}
+
+# Local time zone. Choices can be found here:
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+# although not all choices may be available on all operating systems.
+# In a Windows environment this must be set to your system time zone.
+TIME_ZONE = 'America/Chicago'
+
+# Default Language code. All choices can be found here:
+# http://www.i18nguy.com/unicode/language-identifiers.html
 
 LANGUAGE_CODE = '{{default_lang}}'
 _ = lambda s:s

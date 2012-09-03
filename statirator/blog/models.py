@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 from taggit.managers import TaggableManager
 from taggit.models import GenericTaggedItemBase, TagBase
 
@@ -12,7 +13,7 @@ class I18NTag(TagBase):
     """
     language = models.CharField(max_length=5, choices=settings.LANGUAGES,
                                 blank=True, default=settings.LANGUAGE_CODE)
-    slug = models.SlugField(unique=False, max_length=100)
+    slug = models.SlugField(verbose_name=_('Slug'), unique=False, max_length=100)
 
     class Meta:
         unique_together = ('language', 'slug')
