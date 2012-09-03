@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_medusa',
     'taggit',
+    'statirator.core',
     'statirator.blog',
 )
 

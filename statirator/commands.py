@@ -33,14 +33,6 @@ def init(args):
     call_command('startproject', 'conf', args.directory, **ctx)
 
 
-def _site_from_config():
-
-    sys.path.append(os.path.abspath(os.getcwd()))
-    from config import site
-
-    return site
-
-
 def generate(args):
     """generate the site.
 
