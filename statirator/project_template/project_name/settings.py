@@ -14,6 +14,8 @@ DATABASES = {
     }
 }
 
+SITE_ID = 1
+
 # Local time zone. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -22,7 +24,6 @@ TIME_ZONE = 'America/Chicago'
 
 # Default Language code. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-
 LANGUAGE_CODE = '{{default_lang}}'
 _ = lambda s:s
 
