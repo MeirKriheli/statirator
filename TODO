@@ -1,0 +1,2 @@
+* Move the init command to django command
+* Setup logging and move print statements to the logging
