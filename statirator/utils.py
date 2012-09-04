@@ -1,3 +1,4 @@
+import os
 import logging
 
 
@@ -31,3 +32,16 @@ def find_readers():
                 raise
 
     return readers
+
+
+def find_files(root, extensions):
+    """Generator finding files from a root dir with specific extensions
+
+    :param root: Root directory for the search
+    :param extensions: List of extensions to search (e.g: ['.rst', '.txt'])
+    """
+
+    for root, dirs, files in os.walk(root):
+        for f in files:
+            if os.path.splitext(f)[1] in extensions:
+                yield os.path.join(root, f)
