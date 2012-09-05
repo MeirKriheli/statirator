@@ -1,2 +1,5 @@
 * Move the init command to django command
+* Change the command from statirtaor to st-it
+* Change manage.py to st-it
 * Setup logging and move print statements to the logging
+* Test setup
