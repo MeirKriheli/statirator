@@ -2,6 +2,7 @@ from __future__ import print_function
 import os
 
 from statirator.core.utils import find_files
+from statirator.core.parsers import parse_rst
 
 
 def get_blog_dir():
@@ -13,34 +14,12 @@ def get_blog_dir():
 
 
 def rst_reader():
-    """Reader rst posts, each post should be in the sections separated by
-    comment of "sep"" with example sections in the format:
-
-    Generic fields for all languages, e.g:
-
-    :slug: some-post-title-slugified
-    :draft: 1/0 (Default assumes that it's published)
-    :date: yyyy-mm-dd hh:mm:ss
-
-    .. --
-
-    :title: Some post title
-    :lang: en
-    :tags: Tag1, Tag2
-
-    The content of the post
-
-    .. --
-
-    :title: The title in Hebrew
-    :lang: he
-    :tags: Heb Tag1|slug, Heb Tag2|slug
-
-    The content of the post in hebrew
-    """
+    "Finds rst posts, parses them and loads into the db."
 
     for post in find_files(get_blog_dir(), ['.rst']):
         print('Processing {0}'.format(post))
+        with open(post) as p:
+            parsed = parse_rst(p.read())
 
 
 READERS = [rst_reader]
