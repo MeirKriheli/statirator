@@ -1,3 +1,4 @@
+import sys
 import argparse
 import logging
 from . import commands
@@ -53,11 +54,16 @@ def setup_logging(args):
 
 
 def main():
-    parser = create_options()
-    args = parser.parse_args()
+    # init is a special case, cause we want to add statirator.core to
+    # INSTALLED_APPS, and have the command picked up. we'll handle it in here
 
-    setup_logging(args)
-    args.func(args)
+    if 'init' in sys.argv:
+        from django.conf import settings
+        settings.configure(INSTALLED_APPS=('statirator.core', ))
+
+    from django.core import management
+    management.execute_from_command_line()
+
 
 if __name__ == '__main__':
     main()
