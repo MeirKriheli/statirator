@@ -1,6 +1,7 @@
 import os
-from optparse import make_option
+import logging
 from django.core.management.base import BaseCommand
+from optparse import make_option
 
 
 class Command(BaseCommand):
@@ -22,6 +23,9 @@ class Command(BaseCommand):
     ) + BaseCommand.option_list
 
     def handle(self, directory, **options):
+
+        logging.info("Initializing project structure in  %s", directory)
+        os.makedirs(directory)
 
         from django.conf.global_settings import LANGUAGES
 
