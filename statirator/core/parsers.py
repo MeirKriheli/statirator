@@ -1,4 +1,4 @@
-def parse_rst():
+def parse_rst(content):
     """Parse multilingual rst document. Content should contain a metadata
     section which is the same for all languages, and sections for each
     language. the sections should be separated by comment of "--"". e.g:

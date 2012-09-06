@@ -1,5 +1,5 @@
 def dummy_reader():
-    pass
+    "Just for tests"
 
 
 READERS = [dummy_reader]
