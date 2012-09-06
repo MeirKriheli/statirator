@@ -28,11 +28,12 @@ class Command(BaseCommand):
         os.makedirs(directory)
 
         from django.conf.global_settings import LANGUAGES
+        langs = options.pop('languages')
 
         extra = {
             'build': 'build',
-            'default_lang': options['languages'][0],
-            'languages': [l for l in LANGUAGES if l[0] in options["languages"]],
+            'default_lang': langs[0],
+            'languages': [l for l in LANGUAGES if l[0] in langs],
             'extensions': ('py', ),
             'files': (),
             'template': os.path.abspath(
