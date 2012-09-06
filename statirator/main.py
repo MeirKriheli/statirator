@@ -1,3 +1,4 @@
+import os
 import sys
 
 
@@ -8,6 +9,9 @@ def main():
     if 'init' in sys.argv:
         from django.conf import settings
         settings.configure(INSTALLED_APPS=('statirator.core', ))
+    elif 'test' in sys.argv:
+        os.environ.setdefault(
+            "DJANGO_SETTINGS_MODULE", "statirator.test_settings")
 
     from django.core import management
     management.execute_from_command_line()
