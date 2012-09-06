@@ -22,7 +22,7 @@ def rst_reader():
     :draft: 1/0 (Default assumes that it's published)
     :date: yyyy-mm-dd hh:mm:ss
 
-    .. sep
+    .. --
 
     :title: Some post title
     :lang: en
@@ -30,7 +30,7 @@ def rst_reader():
 
     The content of the post
 
-    .. sep
+    .. --
 
     :title: The title in Hebrew
     :lang: he
