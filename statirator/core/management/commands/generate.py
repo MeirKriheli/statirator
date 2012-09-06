@@ -1,7 +1,7 @@
 import logging
 
 from django.core.management.base import BaseCommand
-from statirator.utils import find_readers
+from statirator.core.utils import find_readers
 
 
 class Command(BaseCommand):

@@ -1,7 +1,7 @@
 from __future__ import print_function
 import os
 
-from statirator.utils import find_files
+from statirator.core.utils import find_files
 
 
 def get_blog_dir():
