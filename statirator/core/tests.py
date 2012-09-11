@@ -7,7 +7,7 @@ from statirator.core.parsers import parse_rst
 TEST_DOC = """
 :slug: some-post-title-slugified
 :draft: 1
-:date: yyyy-mm-dd hh:mm:ss
+:datetime: yyyy-mm-dd hh:mm:ss
 
 .. --
 
@@ -45,9 +45,9 @@ class CoreTestCase(unittest.TestCase):
         """Correctly parse multilingual rst documents"""
 
         parsed = parse_rst(TEST_DOC)
-        generic_metadata = parsed[0]
+        generic_metadata, content = parsed.next()
         self.assertEqual(generic_metadata, {
             'slug': 'some-post-title-slugified',
             'draft': '1',
-            'date': 'yyyy-mm-dd hh:mm:ss'
+            'datetime': 'yyyy-mm-dd hh:mm:ss'
         })
