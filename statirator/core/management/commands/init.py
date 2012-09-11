@@ -13,7 +13,7 @@ class Command(BaseCommand):
     option_list = (
         make_option(
             '--title', '-t', dest='title', default='Default site',
-            help='Site title [Default: "%defaults"]'),
+            help='Site title [Default: "%default"]'),
         make_option(
             '--domain', '-d', dest='domain', default='example.com',
             help='Domain name [Default: "%default"]'),

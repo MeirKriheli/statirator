@@ -1,4 +1,4 @@
-from __future__ import print_function
+from __future__ import print_function, absolute_import
 import os
 
 from statirator.core.utils import find_files
@@ -21,5 +21,7 @@ def rst_reader():
         with open(post) as p:
             parsed = parse_rst(p.read())
 
+            metadata = parsed.next()
+            print(metadata)
 
 READERS = [rst_reader]
