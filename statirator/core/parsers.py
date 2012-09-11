@@ -1,5 +1,17 @@
 import re
 from docutils.core import publish_doctree
+from docutils.nodes import docinfo
+from datetime import datetime
+
+
+FIELDS = {
+    'slug': None,
+    'title': None,
+    'lang': None,
+    'draft': lambda x: bool(int(x)),
+    'tags': lambda x: [y.strip() for y in x.split(',')],
+    'datetime': lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S'),
+}
 
 
 def parse_rst(content):
@@ -8,7 +20,7 @@ def parse_rst(content):
     language. the sections should be separated by comment of "--"". e.g::
 
         :slug: some-post-title-slugified
-        :draft: 1/0 (Default assumes that it's published)
+        :draft: 1/0 (Defaulty in x.split(',')],
         :datetime: yyyy-mm-dd hh:mm:ss
 
         .. --
@@ -37,14 +49,16 @@ def parse_rst(content):
         content = ''
         metadata = {}
 
-        tree = publish_doctree(part).asdom()
+        tree = publish_doctree(part)
 
-        # get the fields
-        fields = tree.getElementsByTagName('field')
+        for info in tree.traverse(docinfo):
+            for field in info.children:
+                    name_el, body_el = field.children
+                    name = name_el.astext().lower()
+                    if name in FIELDS:
+                        body = body_el.astext()
+                        transform = FIELDS[name]
 
-        for field in fields:
-            nodes = zip(field.getElementsByTagName('field_name'),
-                        field.getElementsByTagName('field_body'))
-            metadata.update(dict((n[0].firstChild.nodeValue, n[1].firstChild.firstChild.nodeValue) for n in nodes))
+                        metadata[name] = transform(body) if transform else body
 
         yield metadata, content

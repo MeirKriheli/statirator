@@ -1,3 +1,4 @@
+import datetime
 from django.utils import unittest
 from statirator.core.utils import find_readers
 from statirator.core.readers import dummy_reader
@@ -7,7 +8,7 @@ from statirator.core.parsers import parse_rst
 TEST_DOC = """
 :slug: some-post-title-slugified
 :draft: 1
-:datetime: yyyy-mm-dd hh:mm:ss
+:datetime: 2012-09-12 16:03:15
 
 .. --
 
@@ -48,6 +49,6 @@ class CoreTestCase(unittest.TestCase):
         generic_metadata, content = parsed.next()
         self.assertEqual(generic_metadata, {
             'slug': 'some-post-title-slugified',
-            'draft': '1',
-            'datetime': 'yyyy-mm-dd hh:mm:ss'
+            'draft': True,
+            'datetime': datetime.datetime(2012, 9, 12, 16, 3, 15),
         })
