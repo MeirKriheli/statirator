@@ -1,7 +1,8 @@
 import re
-from docutils.core import publish_doctree
-from docutils.nodes import docinfo
 from datetime import datetime
+from docutils.core import publish_doctree, publish_from_doctree
+from docutils.nodes import docinfo
+from html5writer import html5writer
 
 
 FIELDS = {
@@ -45,6 +46,7 @@ def parse_rst(content):
     """
 
     parts = re.split(r'^\.\.\s+--\s*$', content, flags=re.M)
+
     for part in parts:
         content = ''
         metadata = {}
@@ -61,4 +63,7 @@ def parse_rst(content):
 
                         metadata[name] = transform(body) if transform else body
 
+        writer = html5writer.SemanticHTML5Writer()
+        publish_from_doctree(tree, writer=writer)
+        content = writer.parts['body']
         yield metadata, content

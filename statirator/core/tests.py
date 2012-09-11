@@ -10,6 +10,8 @@ TEST_DOC = """
 :draft: 1
 :datetime: 2012-09-12 16:03:15
 
+This will be ignored in main meta section
+
 .. --
 
 =================
@@ -52,3 +54,5 @@ class CoreTestCase(unittest.TestCase):
             'draft': True,
             'datetime': datetime.datetime(2012, 9, 12, 16, 3, 15),
         })
+        self.assertEqual(content.strip(),
+                         u'<p>This will be ignored in main meta section</p>')
