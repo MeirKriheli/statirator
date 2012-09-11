@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import datetime
 from django.utils import unittest
 from statirator.core.utils import find_readers
@@ -15,25 +16,27 @@ This will be ignored in main meta section
 .. --
 
 =================
-Some post title
+English title
 =================
 
 :lang: en
 :tags: Tag1, Tag2
 
-The content of the post
+The content of the English post
+
+And another paragraph
 
 .. --
 
 ====================
-The title in Hebrew
+כותרת עברית
 ====================
 
 :lang: he
-:tags: Heb Tag1|slug, Heb Tag2|slug
+:tags: פייתון|python, Heb Tag2|slug
 
-The content of the post in hebrew
-"""
+The content of the post in Hebrew
+""".decode('utf-8')
 
 
 class CoreTestCase(unittest.TestCase):
@@ -48,7 +51,7 @@ class CoreTestCase(unittest.TestCase):
         """Correctly parse multilingual rst documents"""
 
         parsed = parse_rst(TEST_DOC)
-        generic_metadata, content = parsed.next()
+        generic_metadata, title, content = parsed.next()
         self.assertEqual(generic_metadata, {
             'slug': 'some-post-title-slugified',
             'draft': True,
@@ -56,3 +59,19 @@ class CoreTestCase(unittest.TestCase):
         })
         self.assertEqual(content.strip(),
                          u'<p>This will be ignored in main meta section</p>')
+
+        en_metadata, en_title, en_content = parsed.next()
+        self.assertEqual(en_metadata, {'lang': 'en', 'tags': ['Tag1', 'Tag2']})
+        self.assertEqual(en_title, u'English title')
+        self.assertEqual(en_content.strip(),
+                         u'<p>The content of the English post</p>\n'
+                         u'<p>And another paragraph</p>')
+
+        he_metadata, he_title, he_content = parsed.next()
+        self.assertEqual(he_metadata, {
+            'lang': 'he',
+            'tags': ['פייתון|python'.decode('utf-8'), 'Heb Tag2|slug']
+        })
+        self.assertEqual(he_title, 'כותרת עברית'.decode('utf-8'))
+        self.assertEqual(he_content.strip(),
+                         u'<p>The content of the post in Hebrew</p>')

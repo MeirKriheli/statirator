@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 from datetime import datetime
 from docutils.core import publish_doctree, publish_from_doctree
@@ -21,34 +22,45 @@ def parse_rst(content):
     language. the sections should be separated by comment of "--"". e.g::
 
         :slug: some-post-title-slugified
-        :draft: 1/0 (Defaulty in x.split(',')],
-        :datetime: yyyy-mm-dd hh:mm:ss
+        :draft: 1
+        :datetime: 2012-09-12 16:03:15
+
+        This will be ignored in main meta section
 
         .. --
 
-        :title: Some post title
+        =================
+        English title
+        =================
+
         :lang: en
         :tags: Tag1, Tag2
 
-        The content of the post
+        The content of the English post
+
+        And another paragraph
 
         .. --
 
-        :title: The title in Hebrew
-        :lang: he
-        :tags: Heb Tag1|slug, Heb Tag2|slug
+        ====================
+        כותרת עברית
+        ====================
 
-        The content of the post in hebrew
+        :lang: he
+        :tags: פייתון|python, Heb Tag2|slug
+
+        The content of the post in Hebrew
 
     Returned value is a genearator:
 
-    common metadata, (metadata, content), (metadata, content) ...
+    (common metadata, '', content), (metadata, title, content), (metadata, title, content) ...
     """
 
     parts = re.split(r'^\.\.\s+--\s*$', content, flags=re.M)
 
     for part in parts:
         content = ''
+        title = ''
         metadata = {}
 
         tree = publish_doctree(part)
@@ -66,4 +78,5 @@ def parse_rst(content):
         writer = html5writer.SemanticHTML5Writer()
         publish_from_doctree(tree, writer=writer)
         content = writer.parts['body']
-        yield metadata, content
+        title = writer.parts['title']
+        yield metadata, title, content
