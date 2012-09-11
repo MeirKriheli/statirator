@@ -31,5 +31,5 @@ class Command(BaseCommand):
             'slug': slug,
             'draft': draft,
         }
+
         metadata_rendered = render_to_string('blog/new_post_metadata.rst', ctx)
-        print metadata_rendered

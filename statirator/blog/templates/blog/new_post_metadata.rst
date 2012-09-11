@@ -1,10 +1,9 @@
-{% load "i18n" %}
 :slug: {{ slug }}
 :draft: {{ draft  }}
-:datetime: {{ now "%Y-%m-%d %H:%M:%S" }}
+:datetime: {% now "Y-m-d H:i:s" %}
 
+{% comment %}
 .. --
-
 =================
 English title
 =================
@@ -27,4 +26,4 @@ And another paragraph
 
 The content of the post in Hebrew
 """.decode('utf-8')
-
+{% endcomment %}
