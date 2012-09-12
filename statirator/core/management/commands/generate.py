@@ -12,7 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         # make sure we have the db
-        call_command('syncdb')
+        call_command('syncdb', load_initial_data=False, interactive=False)
         self.readers = find_readers()
         self.read_resources()
 
