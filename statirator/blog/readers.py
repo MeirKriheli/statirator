@@ -25,7 +25,7 @@ def rst_reader():
                     content=content,
                     pubdate=generic_metadata['datetime'],
                     language=metadata['lang'])
-            post.save()
-            # TODO handle tags
+                post.save()
+                # TODO handle tags
 
 READERS = [rst_reader]
