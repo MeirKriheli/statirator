@@ -43,6 +43,14 @@ TEMPLATE_DIRS = (
     os.path.join(ROOT_DIR, 'templates'),
 )
 
+
+# Static files setup
+STATIC_URL = '/'
+STATIC_ROOT = BUILD_DIR
+STATICFILES_DIRS = (
+    os.path.join(ROOT_DIR, 'static'),
+)
+
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sites',
