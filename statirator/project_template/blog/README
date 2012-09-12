@@ -1,0 +1,11 @@
+Blog posts go in here.
+
+To easily create a new multilingual blog post with the title, run from the
+sites's root::
+
+    ./manage.py create_post "English title goes here"
+
+Once created, edit and add content.
+
+
+THIS FILE CAN BE DELETED
