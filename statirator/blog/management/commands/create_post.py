@@ -40,7 +40,7 @@ class Command(BaseCommand):
         filename = os.path.join(get_blog_dir(), slug + '.rst')
         with codecs.open(filename, 'w', 'utf-8') as post_file:
 
-            metadata_rendered = render_to_string('blog/new_post_metadata.rst', ctx)
+            metadata_rendered = render_to_string('blog/new_post_metadata.txt', ctx)
             post_file.write(metadata_rendered)
 
             cur_lang = translation.get_language()
@@ -51,7 +51,7 @@ class Command(BaseCommand):
                 translation.activate(lang_code)
 
                 ctx.update({'title': title_or_slug})
-                post_rendered = render_to_string('blog/new_post_content.rst', ctx)
+                post_rendered = render_to_string('blog/new_post_content.txt', ctx)
                 post_file.write(post_rendered)
 
             translation.activate(cur_lang)
