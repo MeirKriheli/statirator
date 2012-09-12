@@ -56,3 +56,6 @@ INSTALLED_APPS = (
 MEDUSA_RENDERER_CLASS = "django_medusa.renderers.DiskStaticSiteRenderer"
 MEDUSA_MULTITHREAD = True
 MEDUSA_DEPLOY_DIR = BUILD_DIR
+
+# Set your Analytics site id in here to enable analytics in pages
+GOOGLE_ANALYTICS_ID = ''
