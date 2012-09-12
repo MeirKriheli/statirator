@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>{% load i18n staticfiles %}
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
   <script src="js/vendor/modernizr-2.6.1.min.js"></script>
+  {% block extra_head %}{% endblock %}
 </head>
 <body>
   <!--[if lt IE 7]>
