@@ -18,7 +18,7 @@ DATABASES = {
 # Site(s) definitions. The Sites will be created when generate is called
 # Each site is (domain, language, title). language of None means all
 SITES = (
-    ('{{domain}}', None, '{{title}}'),
+    ('{{ domain }}', None, '{{ title }}'),
 )
 
 SITE_ID = 1
@@ -31,11 +31,11 @@ TIME_ZONE = '{{ timezone  }}'
 
 # Default Language code. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = '{{default_lang}}'
+LANGUAGE_CODE = '{{ default_lang }}'
 _ = lambda s:s
 
 LANGUAGES = ({% for code, name in languages %}
-    ('{{code}}', _('{{ name }}')),
+    ('{{ code }}', _('{{ name }}')),
 {% endfor %})
 
 ROOT_URLCONF = '{{ project_name }}.urls'
