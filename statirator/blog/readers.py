@@ -44,7 +44,7 @@ def rst_reader():
                 post = Post(
                     title=title,
                     slug=generic_metadata['slug'],
-                    is_published=generic_metadata['draft'],
+                    is_published=not generic_metadata['draft'],
                     content=content,
                     pubdate=generic_metadata['datetime'],
                     language=lang)

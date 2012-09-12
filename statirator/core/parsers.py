@@ -10,7 +10,7 @@ FIELDS = {
     'slug': None,
     'title': None,
     'lang': None,
-    'draft': lambda x: not bool(int(x)),
+    'draft': lambda x: bool(int(x)),
     'tags': lambda x: [y.strip() for y in x.split(',')],
     'datetime': lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S'),
 }
