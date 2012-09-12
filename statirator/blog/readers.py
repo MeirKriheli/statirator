@@ -1,16 +1,8 @@
 from __future__ import print_function, absolute_import
-import os
 
 from statirator.core.utils import find_files
 from statirator.core.parsers import parse_rst
-
-
-def get_blog_dir():
-    "Returns the blog directory from settings, or default one if not found"
-
-    from django.conf import settings
-
-    return getattr(settings, 'BLOG_DIR', os.path.join(settings.ROOT_DIR, 'blog'))
+from .utils import get_blog_dir
 
 
 def rst_reader():
