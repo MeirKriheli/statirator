@@ -14,13 +14,20 @@ DATABASES = {
     }
 }
 
+
+# Site(s) definitions. The Sites will be created when generate is called
+# Each site is (domain, language, title). language of None means all
+SITES = (
+    ('{{domain}}', None, '{{title}}'),
+)
+
 SITE_ID = 1
 
 # Local time zone. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = '{{ timezone  }}'
 
 # Default Language code. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html

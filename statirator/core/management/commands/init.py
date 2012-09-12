@@ -19,7 +19,10 @@ class Command(BaseCommand):
             help='Domain name [Default: "%default"]'),
         make_option(
             '--languages', '-l', dest='languages', default=['he', 'en'],
-            action='append', help='Supported languages. [Default: "%default"]')
+            action='append', help='Supported languages. [Default: "%default"]'),
+        make_option(
+            '--timezone', '-z', dest='timezone', default='America/Chicago',
+            action='append', help='Time Zone. [Default: "%default"]'),
     ) + BaseCommand.option_list
 
     def handle(self, directory, **options):
@@ -35,6 +38,9 @@ class Command(BaseCommand):
             'default_lang': langs[0],
             'languages': [l for l in LANGUAGES if l[0] in langs],
             'extensions': ('py', ),
+            'domain': options['domain'],
+            'timezone': options['timezone'],
+            'title': options['title'],
             'files': (),
             'template': os.path.abspath(
                 os.path.join(
