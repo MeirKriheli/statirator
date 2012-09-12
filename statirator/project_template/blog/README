@@ -1,7 +1,6 @@
 Blog posts go in here.
 
-To easily create a new multilingual blog post with the title, run from the
-sites's root::
+To easily create a new multilingual blog post with the title, run::
 
     ./manage.py create_post "English title goes here"
 
