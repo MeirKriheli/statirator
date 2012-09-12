@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import activate, ugettext_lazy as _
 from taggit.managers import TaggableManager
 from taggit.models import GenericTaggedItemBase, TagBase
 
@@ -46,4 +46,15 @@ class Post(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('view_or_url_name')  # TODO Return correct url
+
+        name = 'blog_post'
+
+        if self.language != settings.LANGUAGE_CODE:
+            name = 'i18n_' + name
+            activate(self.language)
+
+        return (name, (), {
+            'year': self.pubdate.year,
+            'month': self.pubdate.strftime('%m'),
+            'slug': self.slug,
+        })
