@@ -24,7 +24,7 @@ class I18NTag(TagBase):
 
 
 class I18NTaggedItem(GenericTaggedItemBase):
-    tag = models.ForeignKey(I18NTag)
+    tag = models.ForeignKey(I18NTag, related_name="%(app_label)s_%(class)s_items")
 
 
 class Post(models.Model):
