@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% load i18n %}
+
+{% block title %}{% trans "Archive" %}{% endblock %}
+
+{% block content %}
+<section>
+  <header>
+    <h1>{% trans "Archive" %}</h1>
+  </header>
+  {% regroup object_list by pubdate|date:"Y" as year_posts %}
+  <ul>
+{% for year in year_posts %}
+  <li><h2>{{ year.grouper  }}</h2></li>
+  <ul>
+  {% for post in year.list %}
+    <li><a href="{{ post.get_absolute_url  }}">{{ post.title }}</a></li>
+  {% endfor %}    
+  </ul>
+{% endfor %}
+  </ul>
+</section>
+{% endblock %}
