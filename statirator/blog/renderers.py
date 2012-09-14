@@ -5,7 +5,7 @@ from django.utils.translation import activate
 from django.core.urlresolvers import reverse
 from django_medusa.renderers import StaticSiteRenderer
 
-from .models import Post
+from .models import Post, I18NTag
 
 
 class BlogRenderer(StaticSiteRenderer):
@@ -29,4 +29,19 @@ class BlogRenderer(StaticSiteRenderer):
 
         return paths
 
-renderers = [BlogRenderer, ]
+
+class TagsRenderer(StaticSiteRenderer):
+
+    def get_paths(self):
+
+        paths = []
+        for lang_code, lang_name in settings.LANGUAGES:
+            activate(lang_code)
+            items = I18NTag.objects.filter(language=lang_code).order_by('name')
+
+            paths.extend([i.get_absolute_url() for i in items])
+
+        return paths
+
+
+renderers = [BlogRenderer, TagsRenderer]

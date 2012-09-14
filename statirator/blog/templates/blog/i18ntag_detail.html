@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% load i18n %}
+
+{% block title %}{{ object.name }} :: {% trans "Tag" %}{% endblock %}
+
+{% block content %}
+<article>
+  <header>
+  <h1>{% blocktrans with object.name as tag_name %}Items tagged with {{ tag_name }}{% endblocktrans %}</h1>
+  </header>
+    <ul>
+{% for post in posts %}
+        <li><a href="{{post.get_absolute_url}}">{{ post.title }}</a></li>
+{% endfor %}
+    </ul>
+</article>
+{% endblock %}
