@@ -20,11 +20,13 @@ class Command(BaseCommand):
         self.readers = find_readers()
         self.read_resources()
 
-
         print("\nGenerating static pages\n" + 22 * '-')
 
         # Use django-medusa for static pages
         call_command('staticsitegen')
+
+        print("\nCollecting static media\n" + 23 * '-')
+        call_command('collectstatic', interactive=False)
 
     def read_resources(self):
         """Walk to readers to populate the db"""
