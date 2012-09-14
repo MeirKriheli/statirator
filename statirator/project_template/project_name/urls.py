@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from django.conf.urls.i18n import i18n_patterns
-from statirator.blog import views
+from statirator.blog import views, feeds
 
 
 urlpatterns = patterns(
@@ -9,6 +9,7 @@ urlpatterns = patterns(
         views.PostView.as_view(), name='blog_post'),
     url(r'^archive/$', views.ArchiveView.as_view(), name='blog_archive'),
     url(r'^tags/(?P<slug>[-\w]+)/$', views.TagView.as_view(), name='blog_tag'),
+    url(r'^blog.rss$', feeds.PostsFeed(), name='blog_feed'),
 )
 
 # make all the urls patterns again, with i18n translations, that way default

@@ -21,11 +21,13 @@ class BlogRenderer(StaticSiteRenderer):
 
             paths.extend([i.get_absolute_url() for i in items])
 
-            # archive
+            # archive and rss
             if lang_code == settings.LANGUAGE_CODE:
                 paths.append(reverse('blog_archive'))
+                paths.append(reverse('blog_feed'))
             else:
                 paths.append(reverse('i18n_blog_archive'))
+                paths.append(reverse('i18n_blog_feed'))
 
         return paths
 
