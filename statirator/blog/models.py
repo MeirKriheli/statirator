@@ -1,8 +1,10 @@
 from django.db import models
 from django.conf import settings
-from django.utils.translation import activate, ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 from taggit.managers import TaggableManager
 from taggit.models import GenericTaggedItemBase, TagBase
+
+from statirator.core.utils import i18n_permalink
 
 
 class I18NTag(TagBase):
@@ -11,7 +13,7 @@ class I18NTag(TagBase):
     * Add a language field
     * slug will be appended the locale, since we can't override the uniqute in
       the abstract model
-    * slug_no_locate will have the actial slug
+    * slug_no_locate will have the actual slug
 
     """
     language = models.CharField(max_length=5, choices=settings.LANGUAGES,
@@ -44,16 +46,9 @@ class Post(models.Model):
     def __unicode__(self):
         return self.title
 
-    @models.permalink
+    @i18n_permalink
     def get_absolute_url(self):
-
-        name = 'blog_post'
-
-        if self.language != settings.LANGUAGE_CODE:
-            name = 'i18n_' + name
-            activate(self.language)
-
-        return (name, (), {
+        return ('blog_post', (), {
             'year': self.pubdate.year,
             'month': self.pubdate.strftime('%m'),
             'slug': self.slug,

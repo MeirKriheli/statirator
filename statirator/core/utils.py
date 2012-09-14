@@ -1,5 +1,6 @@
 import os
 import logging
+import functools
 
 
 def find_readers():
@@ -45,3 +46,51 @@ def find_files(root, extensions):
         for f in files:
             if os.path.splitext(f)[1] in extensions:
                 yield os.path.join(root, f)
+
+
+def i18n_permalink(*args):
+    """Return the correct URL in case of not the default language.
+    relaces djangos models.permalink.
+
+    Assumes the name of the i18n version of the url pattern is prefix with
+    'i18n_' (This is done in the statirator's default urls.py).
+
+    It looks for a `language` field for the instance. If the name is different,
+    pass it as the first param to the decorator. e.g::
+
+        @i18n_permalink('lang_code')
+        def get_absolute_url(self):
+            return (...)
+
+    """
+    def outer(f):
+        from django.core.urlresolvers import reverse
+        from django.conf import settings
+        from django.utils.translation import activate, get_language
+
+        @functools.wraps(f)
+        def wrapper(obj, *args, **kwargs):
+
+            bits = f(obj, *args, **kwargs)
+            name = bits[0]
+            cur_lang = get_language()
+
+            lang = getattr(obj, language_field)
+            if lang != settings.LANGUAGE_CODE:
+                activate(lang)
+                name = 'i18n_' + name
+
+            res = reverse(bits[0], None, *bits[1:3])
+            activate(cur_lang)
+            return res
+
+        return wrapper
+
+    if len(args) == 1 and callable(args[0]):
+        # No arguments, this is the decorator
+        # Set default values for the arguments
+        language_field = 'language'
+        return outer(args[0])
+    else:
+        language_field = args[0]
+        return outer
