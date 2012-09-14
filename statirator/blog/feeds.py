@@ -1,24 +1,11 @@
 from __future__ import absolute_import
 from django.conf import settings
-from django.contrib.syndication.views import Feed
+from statirator.core.syndication import LanguageFeed
 
 from .models import Post
 
 
-class PostsFeed(Feed):
-
-    def get_feed(self, obj, request):
-        "Override to get items per language"
-
-        try:
-            self.language_code = request.LANGUAGE_CODE  # store it for later
-        except AttributeError:
-            self.language_code = settings.LANGUAGE_CODE
-
-        feed = super(PostsFeed, self).get_feed(obj, request)
-        feed.feed['language'] = self.language_code
-
-        return feed
+class PostsFeed(LanguageFeed):
 
     def link(self):
         if self.language_code == settings.LANGUAGE_CODE:
