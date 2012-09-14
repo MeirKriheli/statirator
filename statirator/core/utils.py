@@ -76,11 +76,12 @@ def i18n_permalink(*args):
             cur_lang = get_language()
 
             lang = getattr(obj, language_field)
+            # activate the obj's lang for correct i18n_patterns reverse
+            activate(lang)
             if lang != settings.LANGUAGE_CODE:
-                activate(lang)
                 name = 'i18n_' + name
 
-            res = reverse(bits[0], None, *bits[1:3])
+            res = reverse(name, None, *bits[1:3])
             activate(cur_lang)
             return res
 
