@@ -24,6 +24,10 @@ class I18NTag(TagBase):
     class Meta:
         unique_together = ('language', 'slug_no_locale')
 
+    @i18n_permalink
+    def get_absolute_url(self):
+        return ('blog_tag', (), {'slug': self.slug_no_locale})
+
 
 class I18NTaggedItem(GenericTaggedItemBase):
     tag = models.ForeignKey(I18NTag, related_name="%(app_label)s_%(class)s_items")
