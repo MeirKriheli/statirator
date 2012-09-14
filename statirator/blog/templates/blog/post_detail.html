@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load i18n %}
 
 {% block title %}{{ object.title }}{% endblock %}
 
@@ -8,5 +8,13 @@
     <h1>{{ object.title }}</h1>
   </header>
 {{ object.content|safe }}
+  <footer>
+    {% trans "Tags" %}:
+    <ul>
+{% for tag in object.tags.all %}
+        <li><a href="{{tag.get_absolute_url}}">{{ tag.name }}</a></li>
+{% endfor %}        
+    </ul>
+  </footer>
 </article>
 {% endblock %}

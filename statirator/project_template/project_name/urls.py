@@ -7,7 +7,8 @@ urlpatterns = patterns(
     '',
     url(r'^(?P<year>\d{4})/(?P<month>\d{2})/(?P<slug>[-\w]+)/$',
         views.PostView.as_view(), name='blog_post'),
-    url(r'^archive/$', views.ArchiveView.as_view(), name='blog_archive')
+    url(r'^archive/$', views.ArchiveView.as_view(), name='blog_archive'),
+    url(r'^tags/(?P<slug>[-\w]+)/$', views.ArchiveView.as_view(), name='blog_tag'),
 )
 
 # make all the urls patterns again, with i18n translations, that way default
