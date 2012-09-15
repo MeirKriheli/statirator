@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext as _
 
 from statirator.core.syndication import LanguageFeed
 from .models import Post, I18NTag
@@ -39,6 +40,9 @@ class TagFeed(LanguageFeed):
         return get_object_or_404(
             I18NTag, slug_no_locale=slug,
             language=request.LANGUAGE_CODE)
+
+    def title(self, obj):
+        return _('Posts tagged with %(tag_name)s') % {'tag_name': obj.name}
 
     def items(self, obj):
         return Post.objects.filter(

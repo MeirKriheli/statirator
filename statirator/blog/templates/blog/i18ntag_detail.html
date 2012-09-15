@@ -5,7 +5,7 @@
 {% block content %}
 <article>
   <header>
-  <h1>{% blocktrans with object.name as tag_name %}Items tagged with {{ tag_name }}{% endblocktrans %}</h1>
+  <h1>{% blocktrans with object.name as tag_name %}Posts tagged with {{ tag_name }}{% endblocktrans %}</h1>
   </header>
     <ul>
 {% for post in posts %}
