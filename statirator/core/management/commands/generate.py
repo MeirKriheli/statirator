@@ -13,6 +13,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         self.syncdb()
+        self.create_sites()
         self.read_resources()
         self.gen_static()
         self.collect_static_media()
@@ -26,6 +27,17 @@ class Command(BaseCommand):
         self.print_title('Syncing in memory db')
         # make sure we have the db
         call_command('syncdb', load_initial_data=False, interactive=False)
+
+    def create_sites(self):
+        "Make sure we have the site framework setup correctly"
+        from django.conf import settings
+        from django.contrib.sites.models import Site
+
+        Site.objects.all().delete()
+
+        for idx, (domain, lang, title) in enumerate(settings.SITES, 1):
+            site = Site(domain=domain, name=title, pk=idx)
+            site.save()
 
     def read_resources(self):
         """Walk to readers to populate the db"""
