@@ -1,6 +1,11 @@
-{% extends "base.html" %}{% load i18n %}
+{% extends "base.html" %}{% load i18n st_core %}
 
 {% block title %}{% trans "Archive" %}{% endblock %}
+
+{% block extra_head %}
+  {% get_current_language as LANGUAGE_CODE %}
+  <link rel="alternate" type="application/rss+xml" title="{% trans "Archive" %}" href="{% i18n_url LANGUAGE_CODE blog_feed %}"></link>  
+{% endblock %}
 
 {% block content %}
 <section>
