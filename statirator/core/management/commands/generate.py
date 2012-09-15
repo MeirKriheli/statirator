@@ -12,25 +12,37 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        print("Syncing in memory db\n" + 20 * '-')
+        self.syncdb()
+        self.read_resources()
+        self.gen_static()
+        self.collect_static_media()
+
+    def print_title(self, title):
+        print()
+        print(title)
+        print(len(title) * '-')
+
+    def syncdb(self):
+        self.print_title('Syncing in memory db')
         # make sure we have the db
         call_command('syncdb', load_initial_data=False, interactive=False)
-
-        # load resources
-        self.readers = find_readers()
-        self.read_resources()
-
-        print("\nGenerating static pages\n" + 22 * '-')
-
-        # Use django-medusa for static pages
-        call_command('staticsitegen')
-
-        print("\nCollecting static media\n" + 23 * '-')
-        call_command('collectstatic', interactive=False)
 
     def read_resources(self):
         """Walk to readers to populate the db"""
 
-        for reader in self.readers:
+        readers = find_readers()
+        self.print_title('Reading resource')
+
+        for reader in readers:
             logging.info('Reading with %s', reader)
             reader()
+
+    def gen_static(self):
+        self.print_title('Generating static pages')
+
+        # Use django-medusa for static pages
+        call_command('staticsitegen')
+
+    def collect_static_media(self):
+        self.print_title('Collecting static media')
+        call_command('collectstatic', interactive=False)
