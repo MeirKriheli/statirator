@@ -30,3 +30,11 @@ class PostsFeed(LanguageFeed):
 
     def item_categories(self, item):
         return item.tags.values_list('name', flat=True)
+
+
+class TagFeed(LanguageFeed):
+
+    def items(self):
+        pass
+
+

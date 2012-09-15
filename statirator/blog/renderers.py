@@ -2,9 +2,9 @@ from __future__ import absolute_import
 
 from django.conf import settings
 from django.utils.translation import activate
-from django.core.urlresolvers import reverse
 from django_medusa.renderers import StaticSiteRenderer
 
+from statirator.core.utils import i18n_reverse
 from .models import Post, I18NTag
 
 
@@ -21,13 +21,8 @@ class BlogRenderer(StaticSiteRenderer):
 
             paths.extend([i.get_absolute_url() for i in items])
 
-            # archive and rss
-            if lang_code == settings.LANGUAGE_CODE:
-                paths.append(reverse('blog_archive'))
-                paths.append(reverse('blog_feed'))
-            else:
-                paths.append(reverse('i18n_blog_archive'))
-                paths.append(reverse('i18n_blog_feed'))
+            paths.append(i18n_reverse(lang_code, 'blog_archive'))
+            paths.append(i18n_reverse(lang_code, 'blog_feed'))
 
         return paths
 
@@ -39,9 +34,14 @@ class TagsRenderer(StaticSiteRenderer):
         paths = []
         for lang_code, lang_name in settings.LANGUAGES:
             activate(lang_code)
-            items = I18NTag.objects.filter(language=lang_code).order_by('name')
+            items = list(
+                I18NTag.objects.filter(language=lang_code).order_by('name'))
 
             paths.extend([i.get_absolute_url() for i in items])
+
+            for tag in items:
+                paths.append(i18n_reverse(lang_code, 'blog_tag_feed',
+                             kwargs={'slug': tag.slug_no_locale}))
 
         return paths
 

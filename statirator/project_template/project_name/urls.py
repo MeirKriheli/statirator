@@ -9,7 +9,9 @@ urlpatterns = patterns(
         views.PostView.as_view(), name='blog_post'),
     url(r'^archive/$', views.ArchiveView.as_view(), name='blog_archive'),
     url(r'^tags/(?P<slug>[-\w]+)/$', views.TagView.as_view(), name='blog_tag'),
-    url(r'^blog.rss$', feeds.PostsFeed(), name='blog_feed'),
+    url(r'^blog\.rss$', feeds.PostsFeed(), name='blog_feed'),
+    url(r'^tags/(?P<slug>[-\w]+)/tag.rss$', feeds.TagFeed(),
+        name='blog_tag_feed'),
 )
 
 # make all the urls patterns again, with i18n translations, that way default

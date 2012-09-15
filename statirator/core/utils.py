@@ -64,26 +64,14 @@ def i18n_permalink(*args):
 
     """
     def outer(f):
-        from django.core.urlresolvers import reverse
-        from django.conf import settings
-        from django.utils.translation import activate, get_language
-
         @functools.wraps(f)
         def wrapper(obj, *args, **kwargs):
 
             bits = f(obj, *args, **kwargs)
             name = bits[0]
-            cur_lang = get_language()
 
             lang = getattr(obj, language_field)
-            # activate the obj's lang for correct i18n_patterns reverse
-            activate(lang)
-            if lang != settings.LANGUAGE_CODE:
-                name = 'i18n_' + name
-
-            res = reverse(name, None, *bits[1:3])
-            activate(cur_lang)
-            return res
+            return i18n_reverse(lang, name, None, *bits[1:3])
 
         return wrapper
 
@@ -95,3 +83,27 @@ def i18n_permalink(*args):
     else:
         language_field = args[0]
         return outer
+
+
+def i18n_reverse(language, viewname, *args, **kwargs):
+    """Django's reverse with a pinch of i18n.
+
+    Assumes the name of the i18n version of the url pattern is prefix with
+    'i18n_' (This is done in the statirator's default urls.py).
+
+    """
+    from django.core.urlresolvers import reverse
+    from django.conf import settings
+    from django.utils.translation import activate, get_language
+
+    cur_lang = get_language()
+
+    # activate the obj's lang for correct i18n_patterns reverse
+    activate(language)
+    if language != settings.LANGUAGE_CODE:
+        viewname = 'i18n_' + viewname
+
+    res = reverse(viewname, *args, **kwargs)
+    activate(cur_lang)
+
+    return res

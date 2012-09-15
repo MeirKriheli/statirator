@@ -13,7 +13,7 @@ class I18NTag(TagBase):
     * Add a language field
     * slug will be appended the locale, since we can't override the uniqute in
       the abstract model
-    * slug_no_locate will have the actual slug
+    * slug_no_locale will have the actual slug
 
     """
     language = models.CharField(max_length=5, choices=settings.LANGUAGES,
