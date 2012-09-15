@@ -28,6 +28,10 @@ class I18NTag(TagBase):
     def get_absolute_url(self):
         return ('blog_tag', (), {'slug': self.slug_no_locale})
 
+    @i18n_permalink
+    def get_feed_url(self):
+        return ('blog_tag_feed', (), {'slug': self.slug_no_locale})
+
 
 class I18NTaggedItem(GenericTaggedItemBase):
     tag = models.ForeignKey(I18NTag, related_name="%(app_label)s_%(class)s_items")

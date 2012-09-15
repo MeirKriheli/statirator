@@ -2,6 +2,10 @@
 
 {% block title %}{{ object.name }} :: {% trans "Tag" %}{% endblock %}
 
+{% block extra_head %}
+  <link rel="alternate" type="application/rss+xml" title="{% blocktrans with object.name as tag_name %}Posts tagged with {{ tag_name }}{% endblocktrans %}" href="{{ object.get_feed_url }}"></link>  
+{% endblock %}
+
 {% block content %}
 <article>
   <header>
