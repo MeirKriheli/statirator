@@ -1,19 +1,19 @@
 from __future__ import absolute_import
-from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
 from statirator.core.syndication import LanguageFeed
+from statirator.core.utils import i18n_reverse
 from .models import Post, I18NTag
 
 
 class PostsFeed(LanguageFeed):
 
-    def link(self):
-        if self.language_code == settings.LANGUAGE_CODE:
-            return '/'
+    def title(self):
+        return _("Recent posts")
 
-        return '/{0}/'.format(self.language_code)
+    def link(self):
+        return i18n_reverse(self.language_code, 'blog_archive')
 
     def items(self):
         return Post.objects.filter(
