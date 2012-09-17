@@ -63,6 +63,7 @@ INSTALLED_APPS = (
     'taggit',
     'statirator.core',
     'statirator.blog',
+    'statirator.pages',
 )
 
 MEDUSA_RENDERER_CLASS = "django_medusa.renderers.DiskStaticSiteRenderer"
