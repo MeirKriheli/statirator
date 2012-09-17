@@ -61,3 +61,11 @@ class Post(models.Model):
             'month': self.pubdate.strftime('%m'),
             'slug': self.slug,
         })
+
+    def get_next(self):
+        return self.get_next_by_pubdate(language=self.language,
+                                        is_published=True)
+
+    def get_previous(self):
+        return self.get_previous_by_pubdate(language=self.language,
+                                            is_published=True)
