@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 
-from django.db.models import Count
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
