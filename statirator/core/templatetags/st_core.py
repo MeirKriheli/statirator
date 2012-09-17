@@ -110,7 +110,7 @@ def i18n_url(parser, token):
     bits = token.split_contents()
     if len(bits) < 3:
         raise TemplateSyntaxError("'%s' takes at least two arguments"
-                                  " (labguage) (path to a view)" % bits[0])
+                                  " (language) (path to a view)" % bits[0])
 
     language = parser.compile_filter(bits[1])
     viewname = bits[2]
