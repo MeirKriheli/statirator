@@ -18,5 +18,8 @@ class Page(models.Model):
 
     @i18n_permalink
     def get_absolute_url(self):
+        # index is a special case
         if self.slug == 'index':
             return ('pages_index', (), {})
+
+        return ('pages_page', (), {'slug': self.slug})
