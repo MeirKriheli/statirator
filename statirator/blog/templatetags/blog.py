@@ -9,7 +9,7 @@ register = Library()
 
 def get_queryset(language):
     qs = I18NTag.objects.filter(language=language)
-    qs = qs.annotate(num_time=Count('blog_i18ntaggeditem_items'))
+    qs = qs.annotate(num_times=Count('blog_i18ntaggeditem_items'))
     return qs
 
 
@@ -22,8 +22,7 @@ class TagListNode(Node):
 
     def render(self, context):
         language = self.language.resolve(context)
-
-        tags_qs = get_queryset(language)
+        tags_qs = get_queryset(language).order_by('-num_times')
 
         if self.asvar:
             context[self.asvar] = tags_qs
