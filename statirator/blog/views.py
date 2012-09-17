@@ -9,7 +9,7 @@ from .models import Post, I18NTag
 
 class PostView(DetailView):
 
-    models = Post
+    model = Post
 
     def get_queryset(self):
         qs = Post.objects.filter(language=self.request.LANGUAGE_CODE)
@@ -18,7 +18,7 @@ class PostView(DetailView):
 
 class ArchiveView(ListView):
 
-    models = Post
+    model = Post
 
     def get_queryset(self):
         qs = Post.objects.filter(language=self.request.LANGUAGE_CODE,
