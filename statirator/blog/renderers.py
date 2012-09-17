@@ -43,6 +43,8 @@ class TagsRenderer(StaticSiteRenderer):
                 paths.append(i18n_reverse(lang_code, 'blog_tag_feed',
                              kwargs={'slug': tag.slug_no_locale}))
 
+            paths.append(i18n_reverse(lang_code, 'blog_tags'))
+
         return paths
 
 

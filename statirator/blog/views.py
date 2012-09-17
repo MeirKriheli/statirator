@@ -45,3 +45,12 @@ class TagView(DetailView):
             tags__slug__in=[tag.slug]).order_by('-pubdate')
 
         return ctx
+
+
+class TagsView(ListView):
+
+    model = I18NTag
+
+    def get_queryset(self):
+        qs = I18NTag.objects.filter(language=self.request.LANGUAGE_CODE)
+        return qs
