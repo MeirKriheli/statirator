@@ -1,8 +1,12 @@
 from django.conf.urls import patterns, url
 from django.conf.urls.i18n import i18n_patterns
+from django.conf import settings
 from statirator.blog import views, feeds
 from statirator.pages import views as pviews
 
+# we need to make sure the pages slug won't catch the /en/ etc  for index pages
+# in various languages
+langs_re = '|'.join(x[0] for x in settings.LANGUAGES)
 
 urlpatterns = patterns(
     '',
@@ -14,7 +18,11 @@ urlpatterns = patterns(
     url(r'^tags/(?P<slug>[-\w]+)/$', views.TagView.as_view(), name='blog_tag'),
     url(r'^tags/(?P<slug>[-\w]+)/tag.rss$', feeds.TagFeed(),
         name='blog_tag_feed'),
+
+    # keep those last
     url(r'^$', pviews.PageView.as_view(), {'slug': 'index'}, name='pages_index'),
+    url(r'^((?!%s)?P<slug>[-\w]+)/$' % langs_re, pviews.PageView.as_view(),
+        name='pages_page'),
 )
 
 # make all the urls patterns again, with i18n translations, that way default
