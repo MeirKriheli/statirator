@@ -1,4 +1,4 @@
-{% extends "base.html" %}{% load i18n st_core %}
+{% extends "base.html" %}{% load i18n st_core blog %}
 
 {% block title %}{% trans "Tags" %}{% endblock %}
 
@@ -6,6 +6,12 @@
 <section>
   <header>
     <h1>{% trans "Tags" %}</h1>
+    {% get_current_language as LANGUAGE_CODE %}{% get_taglist LANGUAGE_CODE as tags %}
+    <ul>
+    {% for tag in tags %}
+      <li><a href="{{ tag.get_absolute_url }}">{{ tag.name  }}</a></li>    
+    {% endfor %}
+    </ul>
   </header>
 </section>
 {% endblock %}

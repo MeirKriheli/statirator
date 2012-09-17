@@ -1,7 +1,10 @@
 from __future__ import absolute_import
 
+from django.db.models import Count
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.views.generic.base import TemplateView
+
 from .models import Post, I18NTag
 
 
@@ -47,10 +50,6 @@ class TagView(DetailView):
         return ctx
 
 
-class TagsView(ListView):
+class TagsView(TemplateView):
 
-    model = I18NTag
-
-    def get_queryset(self):
-        qs = I18NTag.objects.filter(language=self.request.LANGUAGE_CODE)
-        return qs
+    template_name = 'blog/i18ntag_list.html'
