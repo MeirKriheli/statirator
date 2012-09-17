@@ -29,6 +29,7 @@ class ArchiveView(ListView):
 class TagView(DetailView):
 
     model = I18NTag
+    template_name = 'blog/tag_detail.html'
 
     def get_object(self):
 
@@ -51,4 +52,4 @@ class TagView(DetailView):
 
 class TagsView(TemplateView):
 
-    template_name = 'blog/i18ntag_list.html'
+    template_name = 'blog/tag_list.html'
