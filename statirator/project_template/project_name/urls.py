@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 from django.conf.urls.i18n import i18n_patterns
 from statirator.blog import views, feeds
+from statirator.pages import views as pviews
 
 
 urlpatterns = patterns(
@@ -13,6 +14,7 @@ urlpatterns = patterns(
     url(r'^tags/(?P<slug>[-\w]+)/$', views.TagView.as_view(), name='blog_tag'),
     url(r'^tags/(?P<slug>[-\w]+)/tag.rss$', feeds.TagFeed(),
         name='blog_tag_feed'),
+    url(r'^$', pviews.PageView.as_view(), {'slug': 'index'}, name='pages_index'),
 )
 
 # make all the urls patterns again, with i18n translations, that way default
@@ -20,5 +22,6 @@ urlpatterns = patterns(
 
 urlpatterns += i18n_patterns(
     '',
-    *[url(x._regex, x.callback, name='i18n_' + x.name) for x in urlpatterns]
+    *[url(x._regex, x.callback, x.default_args, name='i18n_' + x.name)
+        for x in urlpatterns]
 )

@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 
+from statirator.core.utils import i18n_permalink
+
 
 class Page(models.Model):
     """A multilingual page"""
@@ -14,6 +16,7 @@ class Page(models.Model):
     def __unicode__(self):
         return self.title
 
-    @models.permalink
+    @i18n_permalink
     def get_absolute_url(self):
-        return ('view_or_url_name')
+        if self.slug == 'index':
+            return ('pages_index', (), {})
