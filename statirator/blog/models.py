@@ -43,7 +43,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
     is_published = models.BooleanField(default=True, max_length=200)
-    excerpt = models.TextField(blank=True)
+    excerpt = models.TextField(blank=True, null=True)
     content = models.TextField()
     pubdate = models.DateTimeField(db_index=True)
     language = models.CharField(max_length=5, choices=settings.LANGUAGES,

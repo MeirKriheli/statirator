@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
 import re
 from datetime import datetime
-from docutils.core import publish_doctree, publish_from_doctree
+from docutils.core import publish_doctree, publish_from_doctree, publish_parts
 from docutils.nodes import docinfo
 from html5writer import html5writer
+
+
+def _publish_body(source):
+    """Returns the published body of rst source"""
+    content = publish_parts(source, writer=html5writer.SemanticHTML5Writer())
+    return content['body']
 
 
 FIELDS = {
@@ -13,6 +19,7 @@ FIELDS = {
     'draft': lambda x: bool(int(x)),
     'tags': lambda x: [y.strip() for y in x.split(',')],
     'datetime': lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S'),
+    'excerpt': _publish_body,
 }
 
 

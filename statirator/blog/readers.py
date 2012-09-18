@@ -47,7 +47,8 @@ def rst_reader():
                     is_published=not generic_metadata['draft'],
                     content=content,
                     pubdate=generic_metadata['datetime'],
-                    language=lang)
+                    language=lang,
+                    excerpt=metadata.get('excerpt'))
                 post.save()
                 post.tags.set(*tags)
 
