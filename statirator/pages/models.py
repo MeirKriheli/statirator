@@ -3,6 +3,11 @@ from django.conf import settings
 
 from statirator.core.utils import i18n_permalink
 
+PAGE_TYPES = (
+    ('rst', 'reStructured Text'),
+    ('html', 'Django template'),
+)
+
 
 class Page(models.Model):
     """A multilingual page"""
@@ -12,6 +17,7 @@ class Page(models.Model):
     content = models.TextField()
     language = models.CharField(max_length=5, choices=settings.LANGUAGES,
                                 blank=True, default=settings.LANGUAGE_CODE)
+    page_type = models.CharField(max_length=5, choices=PAGE_TYPES)
 
     def __unicode__(self):
         return self.title
