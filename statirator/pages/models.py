@@ -18,6 +18,7 @@ class Page(models.Model):
     language = models.CharField(max_length=5, choices=settings.LANGUAGES,
                                 blank=True, default=settings.LANGUAGE_CODE)
     page_type = models.CharField(max_length=5, choices=PAGE_TYPES)
+    description = models.CharField(max_length=255, blank=True, null=True)
 
     def __unicode__(self):
         return self.title

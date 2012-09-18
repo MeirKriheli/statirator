@@ -31,7 +31,8 @@ def rst_reader():
                     slug=generic_metadata['slug'],
                     content=content,
                     language=lang,
-                    page_type='rst')
+                    page_type='rst',
+                    description=metadata.get('excerpt'))
                 page.save()
 
 
@@ -52,20 +53,22 @@ def html_reader():
             # have language logic in the template
             for lang_code, lang_name in settings.LANGUAGES:
 
-                translation.activate(lang_code)
-                page = Page(
-                    slug=slug,
-                    content=template_content,
-                    language=lang_code,
-                    page_type='html')
+                with translation.override(lang_code):
+                    page = Page(
+                        slug=slug,
+                        content=template_content,
+                        language=lang_code,
+                        page_type='html')
 
-                # get the title from the template
-                t = Template(template_content)
-                req = RequestFactory().get(page.get_absolute_url())
-                page.title = render_block_to_string(
-                    t, 'title', context_instance=RequestContext(req))
+                    # get the title from the template
+                    t = Template(template_content)
+                    req = RequestFactory().get(page.get_absolute_url(), LANGUAGE_CODE=lang_code)
+                    page.title = render_block_to_string(
+                        t, 'title', context_instance=RequestContext(req))
+                    page.description = render_block_to_string(
+                        t, 'description', context_instance=RequestContext(req))
 
-                page.save()
+                    page.save()
 
 
 READERS = [rst_reader, html_reader]

@@ -128,6 +128,7 @@ def render_template_block(template, block, context):
     """
     Renders a single block from a template. This template should have previously been rendered.
     """
+    template._render(context)
     return render_template_block_nodelist(template.nodelist, block, context)
 
 
@@ -170,5 +171,4 @@ def render_block_to_string(template_or_name, block, dictionary=None,
         context_instance.update(dictionary)
     else:
         context_instance = Context(dictionary)
-    t.render(context_instance)
     return render_template_block(t, block, context_instance)
