@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db.models import Count
 from django.template.base import Node, Library, TemplateSyntaxError
 
-from statirator.blog.models import I18NTag
+from statirator.blog.models import I18NTag, Post
 
 register = Library()
 
@@ -75,6 +75,28 @@ class TagCloudNode(Node):
         return ''
 
 
+class RecentPostsNode(Node):
+    """Recent posts for a specific language"""
+
+    def __init__(self, language, count, asvar=None):
+        self.language = language
+        self.count = count
+        self.asvar = asvar
+
+    def render(self, context):
+        language = self.language.resolve(context)
+        count = self.count.resolve(context)
+
+        qs = Post.objects.filter(
+            language=language, is_published=True).order_by('-pubdate')[:count]
+
+        if self.asvar:
+            context[self.asvar] = qs
+            return ''
+        else:
+            return qs
+
+
 @register.tag
 def get_taglist(parser, token):
     """Returns a tag list, sorted bt the number of tagged items.
@@ -115,3 +137,32 @@ def get_tagcloud(parser, token):
     asvar = bits[-1]
 
     return TagCloudNode(language, asvar)
+
+
+@register.tag
+def get_recent_posts(parser, token):
+    """Returns num of recent posts for a specific language
+
+
+    The first argument is the language code, 2nd is count. Optionally specify
+    "as" var e.g::
+
+        {% get_taglist LANGUAGE_CODE as tags_list %}
+
+    """
+    bits = token.split_contents()
+
+    if len(bits) < 3:
+        raise TemplateSyntaxError("'%s' takes at least language_code and count"
+                                  " parameters" % bits[0])
+
+    language = parser.compile_filter(bits[1])
+    count = parser.compile_filter(bits[2])
+
+    bits = bits[3:]
+
+    asvar = None
+    if bits and bits[-2] == 'as':
+        asvar = bits[-1]
+
+    return RecentPostsNode(language, count, asvar)
