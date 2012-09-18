@@ -19,7 +19,7 @@ FIELDS = {
     'draft': lambda x: bool(int(x)),
     'tags': lambda x: [y.strip() for y in x.split(',')],
     'datetime': lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S'),
-    'excerpt': _publish_body,
+    'excerpt': None,
     'image': None,
 }
 
