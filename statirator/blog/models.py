@@ -48,6 +48,7 @@ class Post(models.Model):
     pubdate = models.DateTimeField(db_index=True)
     language = models.CharField(max_length=5, choices=settings.LANGUAGES,
                                 blank=True, default=settings.LANGUAGE_CODE)
+    image = models.CharField(max_length=255, blank=True, null=True)
 
     tags = TaggableManager(through=I18NTaggedItem)
 

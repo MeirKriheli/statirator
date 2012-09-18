@@ -48,7 +48,8 @@ def rst_reader():
                     content=content,
                     pubdate=generic_metadata['datetime'],
                     language=lang,
-                    excerpt=metadata.get('excerpt'))
+                    excerpt=metadata.get('excerpt'),
+                    image=metadata.get('image'))
                 post.save()
                 post.tags.set(*tags)
 
