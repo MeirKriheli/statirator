@@ -58,6 +58,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'statirator.core.context_processors.st_settings'
 )
 
+LOCALE_PATHS = (
+    os.path.join(ROOT_DIR, 'locale'),
+)
+
 # Static files setup
 STATIC_URL = '/'
 STATIC_ROOT = BUILD_DIR

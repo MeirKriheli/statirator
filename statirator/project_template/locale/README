@@ -1,0 +1,11 @@
+Translation go here. Use::
+
+    ./manage.py makemessages
+
+From the project's root dir to create the translations. Once translated, use
+
+    ./manage.py compilemessages
+
+To compile the translation files.
+
+THIS FILE CAN BE DELETED
