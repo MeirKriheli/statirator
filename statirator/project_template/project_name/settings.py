@@ -31,7 +31,7 @@ TIME_ZONE = '{{ timezone  }}'
 # Default Language code. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = '{{ default_lang }}'
-_ = lambda s:s
+_ = lambda s: s
 
 LANGUAGES = ({% for code, name in languages %}
     ('{{ code }}', _('{{ name }}')),
@@ -46,6 +46,16 @@ TEMPLATE_DIRS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+)
+
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'statirator.core.context_processors.st_settings'
 )
 
 # Static files setup
