@@ -20,6 +20,7 @@ FIELDS = {
     'tags': lambda x: [y.strip() for y in x.split(',')],
     'datetime': lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S'),
     'excerpt': _publish_body,
+    'image': None,
 }
 
 
@@ -31,6 +32,8 @@ def parse_rst(content):
         :slug: some-post-title-slugified
         :draft: 1
         :datetime: 2012-09-12 16:03:15
+        :excerpt: Short description
+        :image: /img/some_image.png
 
         This will be ignored in main meta section
 
