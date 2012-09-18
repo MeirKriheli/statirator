@@ -3,11 +3,13 @@
   <header>
     <h1>{{ post.title }}</h1>
   </header>
+{% with post_url=post.get_absolute_url %}
 {% if post.image %}
-  <div class="post-image"><img src="{{ STATIC_URL }}{{ post.image }}" alt="{{ post.title }}"></div>
+  <div class="post-image"><a href="{{ post_url  }}"><img src="{{ STATIC_URL }}{{ post.image }}" alt="{{ post.title }}"></a></div>
 {% endif %}
 {{ post.excerpt }}
   <footer>
-  <a href="{{ post.get_absolute_url }}">{% trans "Read more" %}</a>
+  <a href="{{ post_url }}">{% trans "Read more" %}</a>
   </footer>
+{% endwith %}
 </article>
