@@ -9,6 +9,7 @@
   <header>
     <h1>{{ object.title }}</h1>
   </header>
+{% if object.image %}  <div class="post-image"><img src="{{ STATIC_URL }}{{ object.image }}" alt="{{ object.title  }}" /></div>{% endif %}
 {{ object.content|safe }}
   <footer>
     {% trans "Tags" %}:
