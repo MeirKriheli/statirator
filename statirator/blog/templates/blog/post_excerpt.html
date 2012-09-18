@@ -1,0 +1,13 @@
+{% load i18n %}
+<article class="post-excerpt">
+  <header>
+    <h1>{{ post.title }}</h1>
+  </header>
+{% if post.image %}
+  <div class="post-image"><img src="{{ STATIC_URL }}{{ post.image }}" alt="{{ post.title }}"></div>
+{% endif %}
+{{ post.excerpt }}
+  <footer>
+  <a href="{{ post.get_absolute_url }}">{% trans "Read more" %}</a>
+  </footer>
+</article>
