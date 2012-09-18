@@ -20,8 +20,8 @@
     <nav class="post-prev-next">
     <ul>
     {% with prev=object.get_previous next=object.get_next %}
-    {% if prev %}<a class="post-prev" href="{{prev.get_absolute_url}}">{{ prev.title }}</a>{% endif %}
-    {% if next %}<a class="post-next" href="{{next.get_absolute_url}}">{{ next.title }}</a>{% endif %}
+    {% if prev %}<li><a class="post-prev" href="{{prev.get_absolute_url}}">{{ prev.title }}</a></li>{% endif %}
+    {% if next %}<li><a class="post-next" href="{{next.get_absolute_url}}">{{ next.title }}</a></li>{% endif %}
     {% endwith %}       
     </ul>    
     </nav>
