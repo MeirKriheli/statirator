@@ -2,7 +2,11 @@ from __future__ import print_function, absolute_import
 
 import os
 from django.conf import settings
-from statirator.core.utils import find_files
+from django.template import Template, RequestContext
+from django.utils import translation
+from django.test.client import RequestFactory
+
+from statirator.core.utils import find_files, render_block_to_string
 from statirator.core.parsers import parse_rst
 from .utils import get_pages_dir
 from .models import Page
@@ -47,12 +51,19 @@ def html_reader():
             # Each template will be renderd for each language, so make sure to
             # have language logic in the template
             for lang_code, lang_name in settings.LANGUAGES:
+
+                translation.activate(lang_code)
                 page = Page(
-                    title=slug,
                     slug=slug,
                     content=template_content,
                     language=lang_code,
                     page_type='html')
+
+                # get the title from the template
+                t = Template(template_content)
+                req = RequestFactory().get(page.get_absolute_url())
+                page.title = render_block_to_string(
+                    t, 'title', context_instance=RequestContext(req))
 
                 page.save()
 
