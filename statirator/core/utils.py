@@ -107,3 +107,109 @@ def i18n_reverse(language, viewname, *args, **kwargs):
     activate(cur_lang)
 
     return res
+
+
+# The following allow rendering specific template blocks (for data extraction)
+# Taken from: http://djangosnippets.org/snippets/942/
+
+def get_template(template):
+    from django.template import loader
+
+    if isinstance(template, (tuple, list)):
+        return loader.select_template(template)
+    return loader.get_template(template)
+
+
+class BlockNotFound(Exception):
+    pass
+
+
+def render_template_block(template, block, context):
+    """
+    Renders a single block from a template. This template should have previously been rendered.
+    """
+    return render_template_block_nodelist(template.nodelist, block, context)
+
+
+def render_template_block_nodelist(nodelist, block, context):
+    from django.template.loader_tags import BlockNode, ExtendsNode
+
+    for node in nodelist:
+        if isinstance(node, BlockNode) and node.name == block:
+            return node.render(context)
+        for key in ('nodelist', 'nodelist_true', 'nodelist_false'):
+            if hasattr(node, key):
+                try:
+                    return render_template_block_nodelist(getattr(node, key), block, context)
+                except:
+                    pass
+    for node in nodelist:
+        if isinstance(node, ExtendsNode):
+            try:
+                return render_template_block(node.get_parent(context), block, context)
+            except BlockNotFound:
+                pass
+    raise BlockNotFound
+
+
+def render_block_to_string(template_or_name, block, dictionary=None,
+                           context_instance=None):
+    """
+    Loads the given template_name and renders the given block with the given dictionary as
+    context. Returns a string.
+    """
+    from django.template import Context, Template
+
+    dictionary = dictionary or {}
+    if isinstance(template_or_name, Template):
+        t = template_or_name
+    else:
+        t = get_template(template_or_name)
+
+    if context_instance:
+        context_instance.update(dictionary)
+    else:
+        context_instance = Context(dictionary)
+    t.render(context_instance)
+    return render_template_block(t, block, context_instance)
+
+
+from django.test import Client
+from django.core.handlers.wsgi import WSGIRequest
+
+
+class RequestFactory(Client):
+    """
+    Class that lets you create mock Request objects for use in testing.
+
+    Usage:
+
+    rf = RequestFactory()
+    get_request = rf.get('/hello/')
+    post_request = rf.post('/submit/', {'foo': 'bar'})
+
+    This class re-uses the django.test.client.Client interface, docs here:
+    http://www.djangoproject.com/documentation/testing/#the-test-client
+
+    Once you have a request object you can pass it to any view function,
+    just as if that view had been hooked up using a URLconf.
+
+    """
+    def request(self, **request):
+        """
+        Similar to parent class, but returns the request object as soon as it
+        has created it.
+        """
+        environ = {
+            'HTTP_COOKIE': self.cookies,
+            'PATH_INFO': '/',
+            'QUERY_STRING': '',
+            'REQUEST_METHOD': 'GET',
+            'SCRIPT_NAME': '',
+            'SERVER_NAME': 'testserver',
+            'SERVER_PORT': 80,
+            'SERVER_PROTOCOL': 'HTTP/1.1',
+        }
+        environ.update(self.defaults)
+        environ.update(request)
+        return WSGIRequest(environ)
