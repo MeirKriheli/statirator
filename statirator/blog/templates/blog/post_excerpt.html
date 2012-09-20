@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n disqus_tags %}
 <article class="post-excerpt">
   <header>
     <h1>{{ post.title }}</h1>
@@ -10,6 +10,7 @@
 {{ post.excerpt }}
   <footer>
   <a href="{{ post_url }}">{% trans "Read more" %}</a>
+  <a href="{{ post_url }}#disqus_thread" data-disqus-identifier="{{ post.slug }}_{{ post.lang }}">{% trans "Read more" %}</a>{% disqus_num_replies %}
   </footer>
 {% endwith %}
 </article>
