@@ -88,4 +88,9 @@ MEDUSA_DEPLOY_DIR = BUILD_DIR
 # Set your Analytics site id in here to enable analytics in pages
 GOOGLE_ANALYTICS_ID = ''
 
+# How many posts to show on the index page
 POSTS_IN_INDEX = 2
+
+# disqus settings
+DISQUS_API_KEY = ''
+DISQUS_WEBSITE_SHORTNAME = ''
