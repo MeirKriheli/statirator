@@ -1,4 +1,4 @@
-{% extends "base.html" %}{% load i18n %}
+{% extends "base.html" %}{% load i18n disqus_tags %}
 
 {% block title %}{{ object.title }}{% endblock %}
 
@@ -28,4 +28,8 @@
     </nav>
   </footer>
 </article>
+{% endblock %}
+
+{% block extra_footer %}
+{% disqus_show_comments %}
 {% endblock %}
