@@ -31,5 +31,6 @@
 {% endblock %}
 
 {% block extra_footer %}
+{% set_disqus_identifier object.slug "_" object.language %}
 {% disqus_show_comments %}
 {% endblock %}

@@ -10,7 +10,7 @@
 {{ post.excerpt }}
   <footer>
   <a href="{{ post_url }}">{% trans "Read more" %}</a>
-  <a href="{{ post_url }}#disqus_thread" data-disqus-identifier="{{ post.slug }}_{{ post.lang }}">{% trans "Read more" %}</a>{% disqus_num_replies %}
+  <a href="{{ post_url }}#disqus_thread" data-disqus-identifier="{{ post.slug }}_{{ post.language }}">{% trans "Read more" %}</a>{% disqus_num_replies %}
   </footer>
 {% endwith %}
 </article>
