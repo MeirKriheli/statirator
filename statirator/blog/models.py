@@ -5,9 +5,10 @@ from taggit.managers import TaggableManager
 from taggit.models import GenericTaggedItemBase, TagBase
 
 from statirator.core.utils import i18n_permalink
+from statirator.core.models import TranslationsMixin
 
 
-class I18NTag(TagBase):
+class I18NTag(TagBase, TranslationsMixin):
     """Extend Taggit's Tag:
 
     * Add a language field
@@ -16,6 +17,9 @@ class I18NTag(TagBase):
     * slug_no_locale will have the actual slug
 
     """
+
+    SLUG_FIELD_FOR_TRANSLATIONS = 'slug_no_locale'  # we need to override this
+
     language = models.CharField(max_length=5, choices=settings.LANGUAGES,
                                 blank=True, default=settings.LANGUAGE_CODE)
     slug_no_locale = models.SlugField(verbose_name=_('Slug without locale'),
@@ -37,7 +41,7 @@ class I18NTaggedItem(GenericTaggedItemBase):
     tag = models.ForeignKey(I18NTag, related_name="%(app_label)s_%(class)s_items")
 
 
-class Post(models.Model):
+class Post(models.Model, TranslationsMixin):
     """Multilingual blog posts"""
 
     title = models.CharField(max_length=200)

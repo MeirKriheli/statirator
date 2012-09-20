@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 from statirator.core.utils import i18n_permalink
+from statirator.core.models import TranslationsMixin
 
 PAGE_TYPES = (
     ('rst', 'reStructured Text'),
@@ -9,7 +10,7 @@ PAGE_TYPES = (
 )
 
 
-class Page(models.Model):
+class Page(models.Model, TranslationsMixin):
     """A multilingual page"""
 
     title = models.CharField(max_length=200)
