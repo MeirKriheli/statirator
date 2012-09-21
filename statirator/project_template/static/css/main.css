@@ -93,10 +93,13 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+.post-prev-next li {display:inline-block}
 
+.post-prev:before {content: "\2190\00a0"}
+.post-next:after  {content: "\00a0\2192"}
 
-
-
+html[dir="rtl"] .post-prev:before {content: "\2192\00a0"}
+html[dir="rtl"] .post-next:after  {content: "\00a0\2190"}
 
 
 
