@@ -17,6 +17,7 @@
   <link rel="shortcut icon" href="{% static "img/apple-touch-icon.png" %}">
 
   <link rel="stylesheet" href="{% static "css/normalize.css" %}">
+{% if LANGUAGE_BIDI %}  <link rel="stylesheet" href="{% static "css/normalize_rtl.css" %}">{% endif %}
   <link rel="stylesheet" href="{% static "css/main.css" %}">
   <script src="{% static "js/vendor/modernizr-2.6.1.min.js" %}"></script>
   {% block extra_head %}{% endblock %}

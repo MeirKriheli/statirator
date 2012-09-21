@@ -1,0 +1,7 @@
+/* RTL overrides for normalize */
+
+html[dir="rtl"] menu,
+html[dir="rtl"] ol,
+html[dir="rtl"] ul {
+    padding: 0 40px 0 0;
+}
