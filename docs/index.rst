@@ -13,6 +13,7 @@ Reason
 
 * Needed good multilingual static site generator, which enables:
 
+  * Blog post written in reStructuredText_
   * Explicitly specifying slug for various non-Latin links in addition to posts
     (e.g: Tag names, pages, etc.)
   * Separate RSS feeds for each language and each tag/language
@@ -31,6 +32,7 @@ Contents:
 
 .. _Django: https://www.djangoproject.com/
 .. _Internationalization and localization: https://docs.djangoproject.com/en/1.4/topics/i18n/
+.. _reStructuredText: http://docutils.sourceforge.net/rst.html
 
 .. toctree::
     :maxdepth: 2
