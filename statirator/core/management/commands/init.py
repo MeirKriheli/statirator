@@ -1,6 +1,6 @@
 import os
 import logging
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from optparse import make_option
 
 
@@ -25,7 +25,12 @@ class Command(BaseCommand):
             action='append', help='Time Zone. [Default: "%default"]'),
     ) + BaseCommand.option_list
 
-    def handle(self, directory, **options):
+    def handle(self, *args, **options):
+
+        if len(args) != 1:
+            raise CommandError('init takes one argument: directory name')
+
+        directory = args[0]
 
         logging.info("Initializing project structure in  %s", directory)
         os.makedirs(directory)
