@@ -19,7 +19,7 @@ Reason
   * Many know Django_, we can reuse the knowledge
   * Make use of reusable apps
 
-* Hack around limitations i18n bits of Django_.
+* Hack around i18n bits of Django_.
 
 
 For developers:
