@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% load i18n st_core blog %}
+
+{% block title %}{% trans "Welcome" %}{% endblock %}
+
+{% block description %}{% trans "Welcome to index page" %}{% endblock %}
+
+{% block content %}
+  {% get_recent_posts LANGUAGE_CODE POSTS_IN_INDEX as posts %}
+  {% for post in posts %}{% include "blog/post_excerpt.html" %}{% endfor %}
+{% endblock %}
