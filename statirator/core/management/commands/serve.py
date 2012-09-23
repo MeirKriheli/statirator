@@ -44,6 +44,7 @@ class Command(NoArgsCommand):
         server = ThreadedHTTPServer(('', port), SimpleHTTPServer.SimpleHTTPRequestHandler)
 
         try:
+            # TODO Handle auto rebuild
             server.serve_forever()
         except KeyboardInterrupt:
             print('Shutting down')

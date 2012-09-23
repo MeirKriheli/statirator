@@ -1,4 +1,3 @@
-* serve command
 * Auto generate on filesystem changes
 * Setup logging and move print statements to the logging
 * Documentation
