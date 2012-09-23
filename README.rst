@@ -9,6 +9,7 @@ Reason
 * Needed good multilingual static site generator, which enables:
 
   * Blog posts in reStructuredText_
+  * Single resource (file) for all the translations of that post or page
   * Explicitly specifying slug for various non-Latin links in addition to posts
     (e.g: Tag names, pages, etc.)
   * Separate RSS feeds for each language and each tag/language
