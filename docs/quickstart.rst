@@ -11,7 +11,24 @@ TODO
 Initialize The Site
 ===================
 
-Once installed, use the ``statirator`` command to initialize the site::
+Once installed, use the ``statirator init`` command to initialize the site. The
+command reference::
+
+    Usage: statirator init [options] [directory]
+
+    Init the static site project
+
+    Options:
+    -t TITLE, --title=TITLE
+                            Site title [Default: "Default site"]
+    -d DOMAIN, --domain=DOMAIN
+                            Domain name [Default: "example.com"]
+    -l LANGUAGES, --languages=LANGUAGES
+                            Supported languages. [Default: "['he', 'en']"]
+    -z TIMEZONE, --timezone=TIMEZONE
+                            Time Zone. [Default: "America/Chicago"]
+
+Let's init the site::
 
     statirator init example.com
 
@@ -149,3 +166,87 @@ The 1st section is generic metadata for the post.
 Following sections are one per language (``lang`` is mandatory). As you can see,
 the tags are comma separated and each specifies a tag name and it's slug,
 separated by ``|``. After the metadata for each language comes the content.
+
+
+Generate the Static Site
+===========================
+
+To generate the static site run the ``generate`` command. The will create the
+static site in the ``BUILD_DIR`` directory (default: ``build``). Example run:
+
+.. code-block:: sh
+
+
+    [example.com]$ ./manage.py generate
+
+    Syncing in memory db
+    --------------------
+    Creating tables ...
+    Creating table django_content_type
+    Creating table django_site
+    Creating table taggit_tag
+    Creating table taggit_taggeditem
+    Creating table blog_i18ntag
+    Creating table blog_i18ntaggeditem
+    Creating table blog_post
+    Creating table pages_page
+    Installing custom SQL ...
+    Installing indexes ...
+
+    Reading resource
+    ----------------
+    Processing /home/meir/devel/Projects/meirkriheli/example.com/blog/welcome-to-my-blog.rst
+    Processing /home/meir/devel/Projects/meirkriheli/example.com/pages/index.html
+
+    Generating static pages
+    -----------------------
+    Skipping app 'conf'... (No 'renderers.py')
+    Skipping app 'django.contrib.contenttypes'... (No 'renderers.py')
+    Skipping app 'django.contrib.sites'... (No 'renderers.py')
+    Skipping app 'django.contrib.staticfiles'... (No 'renderers.py')
+    Skipping app 'taggit'... (No 'renderers.py')
+    Skipping app 'disqus'... (No 'renderers.py')
+    Skipping app 'statirator.core'... (No 'renderers.py')
+    Found renderers for 'statirator.blog'...
+    Found renderers for 'statirator.pages'...
+
+    example.com/build/en/2012/09/welcome-to-my-blog/index.html
+    example.com/build/en/archive/index.html
+    example.com/build/en/blog.rss
+    example.com/build/2012/09/welcome-to-my-blog/index.html
+    example.com/build/archive/index.html
+    example.com/build/blog.rss
+    example.com/build/en/tags/tag-1/index.html
+    example.com/build/en/tags/tag-2/index.html
+    example.com/build/en/tags/tag-1/tag.rss
+    example.com/build/en/tags/tag-2/tag.rss
+    example.com/build/en/tags/index.html
+    example.com/build/tags/tag-1/index.html
+    example.com/build/tags/tag-2/index.html
+    example.com/build/tags/tag-1/tag.rss
+    example.com/build/tags/tag-2/tag.rss
+    example.com/build/tags/index.html
+    example.com/build/en/index.html
+    example.com/build/index.html
+
+    Collecting static media
+    -----------------------
+    example.com/static/crossdomain.xml'
+    example.com/static/humans.txt'
+    example.com/static/robots.txt'
+    example.com/static/favicon.ico'
+    example.com/static/img/apple-touch-icon-precomposed.png'
+    example.com/static/img/apple-touch-icon-114x114-precomposed.png'
+    example.com/static/img/apple-touch-icon-57x57-precomposed.png'
+    example.com/static/img/apple-touch-icon.png'
+    example.com/static/img/apple-touch-icon-144x144-precomposed.png'
+    example.com/static/img/apple-touch-icon-72x72-precomposed.png'
+    example.com/static/js/main.js'
+    example.com/static/js/plugins.js'
+    example.com/static/js/vendor/jquery-1.8.0.min.js'
+    example.com/static/js/vendor/modernizr-2.6.1.min.js'
+    example.com/static/css/normalize.css'
+    example.com/static/css/main.css'
+    example.com/static/css/normalize_rtl.css'
+
+    17 static files copied.
