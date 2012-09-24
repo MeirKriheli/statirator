@@ -41,16 +41,23 @@ def rst_reader():
 
                     tags.append(tag)
 
-                post = Post(
+                defaults = dict(
                     title=title,
-                    slug=generic_metadata['slug'],
                     is_published=not generic_metadata['draft'],
                     content=content,
                     pubdate=generic_metadata['datetime'],
                     language=lang,
                     excerpt=metadata.get('excerpt'),
                     image=generic_metadata.get('image'))
-                post.save()
+
+                post, created = Post.objects.get_or_create(
+                    slug=generic_metadata['slug'], defaults=defaults)
+
+                if not created:
+                    for field, val in defaults.iteritems():
+                        setattr(post, field, val)
+                    post.save()
+
                 post.tags.set(*tags)
 
 READERS = [rst_reader]
