@@ -1,4 +1,5 @@
 import os
+import sys
 import logging
 import functools
 
@@ -158,6 +159,10 @@ def render_block_to_string(template_or_name, block, dictionary=None,
     """
     Loads the given template_name and renders the given block with the given dictionary as
     context. Returns a string.
+
+    Can be used to extract data from template blocks (e.g: get the title from
+    {% block title %}{% endblock %})
+
     """
     from django.template import Context, Template
 
@@ -172,3 +177,42 @@ def render_block_to_string(template_or_name, block, dictionary=None,
     else:
         context_instance = Context(dictionary)
     return render_template_block(t, block, context_instance)
+
+
+_mtimes = {}
+_win = (sys.platform == "win32")
+
+
+def filesystem_changed(root_dir, ignore_dirs=None, ignore_extensions=None):
+    "Do we have new, changed, or deleted files under ``root_dir``"
+
+    global _mtimes, _win
+
+    found = {}
+
+    if ignore_extensions is None:
+        ignore_extensions = []
+    if ignore_dirs is None:
+        ignore_dirs = []
+
+    for root, dirs, files in os.walk(root_dir):
+        dirs[:] = [x for x in dirs
+                   if x[0] != '.' and
+                   os.path.abspath(os.path.join(root, x)) not in ignore_dirs]
+
+        for resource in files:
+            if ignore_extensions and any(resource.endswith(ext) for ext in ignore_extensions):
+                continue
+
+            stat = os.stat(os.path.join(root, resource))
+            mtime = stat.st_mtime
+            if _win:
+                mtime -= stat.st_ctime
+
+            found[resource] = int(mtime)
+
+    if found != _mtimes:
+        _mtimes = found.copy()
+        return True
+
+    return False

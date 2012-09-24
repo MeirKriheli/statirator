@@ -1,4 +1,4 @@
-* Auto generate on filesystem changes
 * Setup logging and move print statements to the logging
 * Documentation
 * Allow translation of metadata keywords and directives in rst
+* Testing
