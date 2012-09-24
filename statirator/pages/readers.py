@@ -7,33 +7,29 @@ from django.utils import translation
 from django.test.client import RequestFactory
 
 from statirator.core.utils import find_files, render_block_to_string
-from statirator.core.parsers import parse_rst
 from .utils import get_pages_dir
 from .models import Page
 
 
-def rst_reader():
-    "Finds rst pages, parses them and loads into the db."
+def update_post(slug, lang_code, defaults):
+    with translation.override(lang_code):
+        page, created = Page.objects.get_or_create(
+            slug=slug,
+            language=lang_code,
+            defaults=defaults)
 
-    for page in find_files(get_pages_dir(), ['.rst']):
-        print('Processing {0}'.format(page))
-        with open(page) as p:
-            parsed = parse_rst(p.read())
+        if not created:
+            for field, val in defaults.iteritems():
+                setattr(page, field, val)
+        # get the title from the template
+        t = Template(page.content)
+        req = RequestFactory().get(page.get_absolute_url(), LANGUAGE_CODE=lang_code)
+        page.title = render_block_to_string(
+            t, 'title', context_instance=RequestContext(req))
+        page.description = render_block_to_string(
+            t, 'description', context_instance=RequestContext(req))
 
-            generic_metadata, title, content = parsed.next()
-
-            # got those, now go over the languages
-            for metadata, title, content in parsed:
-                lang = metadata['lang']
-
-                page = Page(
-                    title=title,
-                    slug=generic_metadata['slug'],
-                    content=content,
-                    language=lang,
-                    page_type='rst',
-                    description=metadata.get('excerpt'))
-                page.save()
+        page.save()
 
 
 def html_reader():
@@ -52,23 +48,8 @@ def html_reader():
             # Each template will be renderd for each language, so make sure to
             # have language logic in the template
             for lang_code, lang_name in settings.LANGUAGES:
-
-                with translation.override(lang_code):
-                    page = Page(
-                        slug=slug,
-                        content=template_content,
-                        language=lang_code,
-                        page_type='html')
-
-                    # get the title from the template
-                    t = Template(template_content)
-                    req = RequestFactory().get(page.get_absolute_url(), LANGUAGE_CODE=lang_code)
-                    page.title = render_block_to_string(
-                        t, 'title', context_instance=RequestContext(req))
-                    page.description = render_block_to_string(
-                        t, 'description', context_instance=RequestContext(req))
-
-                    page.save()
+                defaults = dict(content=template_content, page_type='html')
+                update_post(slug, lang_code, defaults)
 
 
-READERS = [rst_reader, html_reader]
+READERS = [html_reader]
