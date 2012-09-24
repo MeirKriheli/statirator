@@ -3,7 +3,6 @@ import os
 
 # Directories setup
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-SOURCE_DIR = os.path.join(ROOT_DIR, '{{ source }}')
 BUILD_DIR = os.path.join(ROOT_DIR, '{{ build }}')
 
 DATABASES = {
