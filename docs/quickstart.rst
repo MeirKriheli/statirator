@@ -250,3 +250,11 @@ static site in the ``BUILD_DIR`` directory (default: ``build``). Example run:
     example.com/static/css/normalize_rtl.css'
 
     17 static files copied.
+
+
+Serving the static site
+==========================
+
+Run the command::
+
+    ./manage.py serve
