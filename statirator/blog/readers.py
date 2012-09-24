@@ -46,12 +46,12 @@ def rst_reader():
                     is_published=not generic_metadata['draft'],
                     content=content,
                     pubdate=generic_metadata['datetime'],
-                    language=lang,
                     excerpt=metadata.get('excerpt'),
                     image=generic_metadata.get('image'))
 
                 post, created = Post.objects.get_or_create(
-                    slug=generic_metadata['slug'], defaults=defaults)
+                    slug=generic_metadata['slug'],
+                    language=lang, defaults=defaults)
 
                 if not created:
                     for field, val in defaults.iteritems():
