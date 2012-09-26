@@ -1,4 +1,6 @@
-* Setup logging and move print statements to the logging
+* Setup logging and convert print statements 
+* Prefix default language as well
+* Multi domains for each lanugage
 * Documentation
 * Allow translation of metadata keywords and directives in rst
 * Testing
