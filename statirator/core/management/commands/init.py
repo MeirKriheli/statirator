@@ -22,7 +22,7 @@ class Command(BaseCommand):
             action='append', help='Supported languages. [Default: "%default"]'),
         make_option(
             '--timezone', '-z', dest='timezone', default='America/Chicago',
-            action='append', help='Time Zone. [Default: "%default"]'),
+            help='Time Zone. [Default: "%default"]'),
     ) + BaseCommand.option_list
 
     def handle(self, *args, **options):
