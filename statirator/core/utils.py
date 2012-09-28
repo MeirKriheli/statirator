@@ -183,15 +183,13 @@ _mtimes = {}
 _win = (sys.platform == "win32")
 
 
-def filesystem_changed(root_dir, ignore_dirs=None, ignore_extensions=None):
+def filesystem_changed(root_dir, ignore_dirs=None, ignore_re=None):
     "Do we have new, changed, or deleted files under ``root_dir``"
 
     global _mtimes, _win
 
     found = {}
 
-    if ignore_extensions is None:
-        ignore_extensions = []
     if ignore_dirs is None:
         ignore_dirs = []
 
@@ -201,17 +199,19 @@ def filesystem_changed(root_dir, ignore_dirs=None, ignore_extensions=None):
                    os.path.abspath(os.path.join(root, x)) not in ignore_dirs]
 
         for resource in files:
-            if ignore_extensions and any(resource.endswith(ext) for ext in ignore_extensions):
+            full = os.path.join(root, resource)
+            if ignore_re and ignore_re.match(full):
                 continue
 
-            stat = os.stat(os.path.join(root, resource))
+            stat = os.stat(full)
             mtime = stat.st_mtime
             if _win:
                 mtime -= stat.st_ctime
 
-            found[resource] = int(mtime)
+            found[full] = int(mtime)
 
     if found != _mtimes:
+        print set(found.items()) - set(_mtimes.items())
         _mtimes = found.copy()
         return True
 

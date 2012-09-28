@@ -1,6 +1,7 @@
 from __future__ import print_function, absolute_import
 
 import os
+import re
 import time
 import threading
 
@@ -64,10 +65,28 @@ class Command(NoArgsCommand):
     def filesystem_watcher(self):
         lock = threading.Lock()
 
+        from django.conf import settings
+
+        ignore_re = None
+        to_ignore = ['\.pyc']
+
+        pipeline_css = getattr(settings, 'PIPELINE_CSS', None)
+        for k, v in pipeline_css.iteritems():
+            source_filenames = v.get('source_filenames', [])
+            for res in source_filenames:
+                if res.endswith('.less'):
+                    to_ignore.append(res.replace('.less', '\.css'))
+
+        if to_ignore:
+            ignore_re = re.compile('.*(' + '|'.join(to_ignore) + ')$')
+
         def watch():
             while not self._shutdown:
                 with lock:
-                    if filesystem_changed(settings.ROOT_DIR, ignore_dirs=[settings.BUILD_DIR]):
+                    if filesystem_changed(
+                            settings.ROOT_DIR,
+                            ignore_dirs=[settings.BUILD_DIR],
+                            ignore_re=ignore_re):
                         call_command('generate')
                     time.sleep(1)
 
