@@ -211,7 +211,6 @@ def filesystem_changed(root_dir, ignore_dirs=None, ignore_re=None):
             found[full] = int(mtime)
 
     if found != _mtimes:
-        print set(found.items()) - set(_mtimes.items())
         _mtimes = found.copy()
         return True
 
