@@ -34,7 +34,10 @@ class PageNode(Node):
         language = self.language.resolve(context)
         slug = self.slug.resolve(context)
 
-        page = Page.objects.get(language=language, slug=slug)
+        try:
+            page = Page.objects.get(language=language, slug=slug)
+        except Page.DoesNotExist:
+            page = None
 
         context[self.asvar] = page
         return ''
