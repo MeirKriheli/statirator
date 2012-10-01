@@ -24,7 +24,7 @@ urlpatterns = patterns(
         name='blog_tag_feed'),
     # keep those last
     url(r'^$', pviews.PageView.as_view(), {'slug': 'index'}, name='pages_index'),
-    url(r'^((?!%s)?P<slug>[-\w]+)/$' % langs_re, pviews.PageView.as_view(),
+    url(r'^(?P<slug>(?!%s)[-\w]+)/$' % langs_re, pviews.PageView.as_view(),
         name='pages_page'),
 )
 
