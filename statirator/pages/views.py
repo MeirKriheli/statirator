@@ -19,7 +19,7 @@ class PageView(DetailView):
         # if this is html content, it's a template, and we should render it
         if self.object.page_type == 'html':
             t = Template(self.object.content)
-            return TemplateResponse(self.request, t)
+            return TemplateResponse(self.request, t, context)
 
         return super(self, PageView).render_to_response(
             context, **response_kwargs)
