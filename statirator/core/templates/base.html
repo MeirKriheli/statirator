@@ -22,7 +22,7 @@
   <script src="{% static "js/vendor/modernizr-2.6.1.min.js" %}"></script>
   {% block extra_head %}{% endblock %}
 </head>
-<body>
+<body class="{{ object.slug  }} {% block body_class %}{% endblock %}">
   <header>
     <h1><a href="{% i18n_url LANGUAGE_CODE pages_index %}">{{ site.name }}</a></h1>
     <nav>
