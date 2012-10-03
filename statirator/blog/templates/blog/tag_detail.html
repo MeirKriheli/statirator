@@ -6,6 +6,8 @@
   <link rel="alternate" type="application/rss+xml" title="{% blocktrans with object.name as tag_name %}Posts tagged with {{ tag_name }}{% endblocktrans %}" href="{{ object.get_feed_url }}"></link>  
 {% endblock %}
 
+{% block body_class %}tags{% endblock %}
+
 {% block content %}
 <article>
   <header>

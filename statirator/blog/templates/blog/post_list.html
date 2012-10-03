@@ -7,6 +7,8 @@
   <link rel="alternate" type="application/rss+xml" title="{% trans "Archive" %}" href="{% i18n_url LANGUAGE_CODE blog_feed %}"></link>  
 {% endblock %}
 
+{% block body_class %}blog{% endblock %}
+
 {% block content %}
 <section>
   <header>
