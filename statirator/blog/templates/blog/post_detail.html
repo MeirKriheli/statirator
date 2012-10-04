@@ -44,5 +44,10 @@
 
 {% block extra_footer %}
 {% set_disqus_identifier object.slug "_" object.language %}
+<script>
+var disqus_config = function () { 
+    this.language = "{{ LANGUAGE_CODE  }}";
+};
+</script>
 {% disqus_show_comments %}
 {% endblock %}
