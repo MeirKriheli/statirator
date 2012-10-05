@@ -13,3 +13,9 @@ class TranslationsMixin(object):
         slug = {self.SLUG_FIELD_FOR_TRANSLATIONS + '__exact': self_slug}
         lang = {self.LANG_FIELD_FOR_TRANSLATIONS + '__exact': self_lang}
         return self.__class__.objects.filter(**slug).exclude(**lang)
+
+    def get_language(self):
+        "Get the language display for this item's language"
+
+        attr = 'get_{0}_display'.format(self.LANG_FIELD_FOR_TRANSLATIONS)
+        return getattr(self, attr)()
