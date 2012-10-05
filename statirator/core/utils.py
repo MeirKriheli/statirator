@@ -136,7 +136,7 @@ def path_to_lang(path, lang):
         pass
 
     if lang != settings.LANGUAGE_CODE:
-        bits.insert(0, settings.LANGUAGE_CODE)
+        bits.insert(0, lang)
 
     return prefix + '/'.join(bits) + postfix
 
