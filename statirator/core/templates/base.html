@@ -30,6 +30,9 @@
         {% for page in all_pages %}
             <li><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
         {% endfor %}
+        {% for page in object.get_translations %}
+        <li><a href="{{ page.get_absolute_url  }}" title="{{ page.title }}">{{ page.get_language }}</a></li>
+        {% endfor %}
         </ul>
     </nav>
   </header>
