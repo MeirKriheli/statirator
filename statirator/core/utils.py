@@ -3,6 +3,11 @@ import sys
 import logging
 import functools
 
+from django.conf import settings
+
+
+LANGS_DICT = dict(settings.LANGUAGES)
+
 
 def find_readers():
     """Auto discover readers in installed apps.
@@ -108,6 +113,32 @@ def i18n_reverse(language, viewname, *args, **kwargs):
     activate(cur_lang)
 
     return res
+
+
+def path_to_lang(path, lang):
+    "Translate one path to another languge, takes into account "
+
+    prefix = postfix = ''
+
+    if path.startswith('/'):
+        path = path[1:]
+        prefix = '/'
+    if path.endswith('/'):
+        path = path[:-1]
+        postfix = '/'
+
+    bits = path.split('/')
+
+    #TODO fix for multi domain or prefixed default language
+    if bits[0] in LANGS_DICT:
+        bits.pop(0)
+    else:  # assume it's the default language.
+        pass
+
+    if lang != settings.LANGUAGE_CODE:
+        bits.insert(0, settings.LANGUAGE_CODE)
+
+    return prefix + '/'.join(bits) + postfix
 
 
 # The following allow rendering specific template blocks (for data extraction)
