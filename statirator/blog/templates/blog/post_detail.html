@@ -7,7 +7,7 @@
 {% block body_class %}blog{% endblock %}
 
 {% block content %}
-<article>
+<article class="blog-post">
   <header>
     <h1>{{ object.title }}</h1>
   </header>
@@ -29,7 +29,7 @@
     </ul>
     {% with object.get_translations as translations %}
     {% if translations %}
-    {% trans "Translations" %}
+    {% trans "Translations" %}:
     <ul>
 {% for tr in translations %}
       <li><a href="{{ tr.get_absolute_url }}">{{ tr.title  }}</a></li>
