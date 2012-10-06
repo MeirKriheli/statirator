@@ -93,3 +93,11 @@ POSTS_IN_INDEX = 2
 # disqus settings
 DISQUS_API_KEY = ''
 DISQUS_WEBSITE_SHORTNAME = ''
+
+# Optionally place sensitive settings, which shoulen't be tracked by version
+# control (e.g: Secret API keys, etc) in local_settings.py. Make sure to have
+# that file ignored.
+try:
+    from local_settings import *
+except ImportError:
+    pass
