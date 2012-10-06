@@ -20,6 +20,7 @@ setup(
         'django-taggit',
         'django-medusa',
         'django-disqus',
+        'django-bidi-utils',
     ],
     dependency_links=[
         'https://github.com/MeirKriheli/rst-to-semantic-html5/tarball/master#egg=html5writer',

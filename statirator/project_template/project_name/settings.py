@@ -54,7 +54,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.core.context_processors.tz',
-    'statirator.core.context_processors.st_settings'
+    'statirator.core.context_processors.st_settings',
+    'bidiutils.context_processors.bidi',
 )
 
 LOCALE_PATHS = (
