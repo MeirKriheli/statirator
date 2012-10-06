@@ -15,7 +15,7 @@
 {{ object.content|safe }}
   <footer>
     {% trans "Tags" %}:
-    <ul>
+    <ul class="post-tags">
 {% for tag in object.tags.all %}
         <li><a href="{{tag.get_absolute_url}}">{{ tag.name }}</a></li>
 {% endfor %}
