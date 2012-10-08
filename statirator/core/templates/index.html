@@ -1,8 +1,9 @@
-{% extends "base.html" %}{% load i18n %}
+{% extends "base.html" %}{% load i18n st_core blog %}
 
 {% block title %}{% trans "Welcome" %}{% endblock %}
 
 {% block content %}
   <h1>{% trans "Welcome" %}</h1>
+  {% get_recent_posts LANGUAGE_CODE POSTS_IN_INDEX as posts %}
   {% for post in posts %}{% include "blog/post_excerpt.html" %}{% endfor %}
 {% endblock %}
