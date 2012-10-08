@@ -14,23 +14,16 @@
 {% if object.image %}  <div class="post-image"><img src="{{ STATIC_URL }}{{ object.image }}" alt="{{ object.title  }}" /></div>{% endif %}
 {{ object.content|safe }}
   <footer>
-    <div class="post-date">{% trans "Published" %}: {{object.pubdate}}</div>
+    <div class="post-date">{% trans "Published" %}: {{LANGUAGE_MARKER}}{{object.pubdate}}</div>
     <div class="post-tags-title">{% trans "Tags" %}:</div>
     <ul class="post-tags">
 {% for tag in object.tags.all %}
         <li><a href="{{tag.get_absolute_url}}">{{ tag.name }}</a></li>
 {% endfor %}
     </ul>
-    <nav class="post-prev-next">
-    <ul>
-    {% with prev=object.get_previous next=object.get_next %}
-    {% if prev %}<li><a class="post-prev" href="{{prev.get_absolute_url}}">{{ prev.title }}</a></li>{% endif %}
-    {% if next %}<li><a class="post-next" href="{{next.get_absolute_url}}">{{ next.title }}</a></li>{% endif %}
-    {% endwith %}
-    </ul>
     {% with object.get_translations as translations %}
     {% if translations %}
-    <div class="post-translations-title">{% trans "Translations" %}:</div>
+    <div class="post-translations-title">{% trans "Translations" %}:{{ LANGUAGE_MARKER }}</div>
     <ul>
 {% for tr in translations %}
       <li><a href="{{ tr.get_absolute_url }}">{{ tr.title  }}</a></li>
@@ -38,6 +31,13 @@
     </ul>
     {% endif %}
     {% endwith %}
+    <nav class="post-prev-next">
+    <ul>
+    {% with prev=object.get_previous next=object.get_next %}
+    {% if prev %}<li><a class="post-prev" href="{{prev.get_absolute_url}}">{{ prev.title }}</a></li>{% endif %}
+    {% if next %}<li><a class="post-next" href="{{next.get_absolute_url}}">{{ next.title }}</a></li>{% endif %}
+    {% endwith %}
+    </ul>
     </nav>
   </footer>
 </article>
