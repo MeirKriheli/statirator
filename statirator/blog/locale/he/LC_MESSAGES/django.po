@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-06 03:04+0200\n"
-"PO-Revision-Date: 2012-10-06 03:05+0200\n"
+"POT-Creation-Date: 2012-10-08 12:43+0200\n"
+"PO-Revision-Date: 2012-10-08 12:43+0200\n"
 "Last-Translator: Meir Kriheli <mkriheli@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "Language: \n"
@@ -49,12 +49,16 @@ msgstr "%(title_i18n)s %(lang_name)s"
 msgid "%(lang_name)s content goes here"
 msgstr "תוכן %(lang_name)s יבוא כאן"
 
-#: templates/blog/post_detail.html:17 templates/blog/tag_list.html:3
+#: templates/blog/post_detail.html:17
+msgid "Published"
+msgstr "פורסם"
+
+#: templates/blog/post_detail.html:18 templates/blog/tag_list.html:3
 #: templates/blog/tag_list.html.py:10
 msgid "Tags"
 msgstr "תגים"
 
-#: templates/blog/post_detail.html:32
+#: templates/blog/post_detail.html:26
 msgid "Translations"
 msgstr "תרגומים"
 
