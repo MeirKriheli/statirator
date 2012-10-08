@@ -14,7 +14,8 @@
 {% if object.image %}  <div class="post-image"><img src="{{ STATIC_URL }}{{ object.image }}" alt="{{ object.title  }}" /></div>{% endif %}
 {{ object.content|safe }}
   <footer>
-    {% trans "Tags" %}:
+    <div class="post-date">{% trans "Published" %}: {{object.pubdate}}</div>
+    <div class="post-tags-title">{% trans "Tags" %}:</div>
     <ul class="post-tags">
 {% for tag in object.tags.all %}
         <li><a href="{{tag.get_absolute_url}}">{{ tag.name }}</a></li>
@@ -29,7 +30,7 @@
     </ul>
     {% with object.get_translations as translations %}
     {% if translations %}
-    {% trans "Translations" %}:
+    <div class="post-translations-title">{% trans "Translations" %}:</div>
     <ul>
 {% for tr in translations %}
       <li><a href="{{ tr.get_absolute_url }}">{{ tr.title  }}</a></li>
