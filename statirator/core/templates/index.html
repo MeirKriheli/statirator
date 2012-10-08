@@ -6,4 +6,5 @@
   <h1>{% trans "Welcome" %}</h1>
   {% get_recent_posts LANGUAGE_CODE POSTS_IN_INDEX as posts %}
   {% for post in posts %}{% include "blog/post_excerpt.html" %}{% endfor %}
+  <p><a href="{% i18n_url LANGUAGE_CODE blog_archive %}">{% trans "More posts at the archive" %}</a></p>
 {% endblock %}
