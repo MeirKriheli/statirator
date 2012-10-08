@@ -3,5 +3,6 @@
 {% block title %}{% trans "Welcome" %}{% endblock %}
 
 {% block content %}
-    Content goes in here
+  <h1>{% trans "Welcome" %}</h1>
+  {% for post in posts %}{% include "blog/post_excerpt.html" %}{% endfor %}
 {% endblock %}
