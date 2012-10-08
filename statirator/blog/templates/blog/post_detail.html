@@ -40,10 +40,6 @@
     </ul>
     </nav>
   </footer>
-</article>
-{% endblock %}
-
-{% block extra_footer %}
 {% set_disqus_identifier object.slug "_" object.language %}
 <script>
 var disqus_config = function () { 
@@ -51,4 +47,5 @@ var disqus_config = function () {
 };
 </script>
 {% disqus_show_comments %}
+</article>
 {% endblock %}
