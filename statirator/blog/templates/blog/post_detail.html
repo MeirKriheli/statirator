@@ -10,11 +10,14 @@
 <article class="blog-post">
   <header>
     <h1>{{ object.title }}</h1>
+    <div class="post-date">
+        {% trans "Published" %}: {{LANGUAGE_MARKER}}
+        <time pubdate="{{object.pubdate|date:"c"}}">{{object.pubdate}}</time>
+    </div>
   </header>
 {% if object.image %}  <div class="post-image"><img src="{{ STATIC_URL }}{{ object.image }}" alt="{{ object.title  }}" /></div>{% endif %}
 {{ object.content|safe }}
   <footer>
-    <div class="post-date">{% trans "Published" %}: {{LANGUAGE_MARKER}}{{object.pubdate}}</div>
     <div class="post-tags-title">{% trans "Tags" %}:</div>
     <ul class="post-tags">
 {% for tag in object.tags.all %}
