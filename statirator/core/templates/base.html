@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="{% static "css/normalize.css" %}">
 {% if LANGUAGE_BIDI %}  <link rel="stylesheet" href="{% static "css/normalize_rtl.css" %}">{% endif %}
   <link rel="stylesheet" href="{% static "css/main.css" %}">
+{% if object %}  <link rel="canonical" href="{{ object.get_absolute_url }}">{% endif %}
   <script src="{% static "js/vendor/modernizr-2.6.1.min.js" %}"></script>
   {% block extra_head %}{% endblock %}
 </head>
@@ -34,7 +35,7 @@
         <li><a href="{{ page.get_absolute_url  }}" title="{{ page.title }}">{{ page.get_language }}</a></li>
         {% endfor %}
         </ul>
-{% block extra_menu %}{% endblock %}        
+{% block extra_menu %}{% endblock %}
     </nav>
   </header>
   <!--[if lt IE 7]>
