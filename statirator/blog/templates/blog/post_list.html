@@ -20,7 +20,7 @@
   <li><h2>{{ year.grouper  }}</h2></li>
   <ul>
   {% for post in year.list %}
-    <li><a href="{{ post.get_absolute_url  }}">{{ post.title }}</a></li>
+    <li>{{ post.pubdate|date:"b d" }}, {{LANGUAGE_MARKER}}<a href="{{ post.get_absolute_url  }}">{{ post.title }}</a></li>
   {% endfor %}
   </ul>
 {% endfor %}
