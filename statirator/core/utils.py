@@ -1,12 +1,13 @@
+from __future__ import absolute_import
+
 import os
 import sys
-import logging
-import functools
 
-from django.conf import settings
-from __future__ import absolute_import
+import functools
+import logging
 import urlparse
 from BeautifulSoup import BeautifulSoup
+from django.conf import settings
 
 
 def content_absolute_links(content):
@@ -28,7 +29,7 @@ def content_absolute_links(content):
     for link in soup.findAll('img'):
         link['src'] = abs_url(link['src'])
 
-    return soup.prettify()
+    return unicode(soup)
 
 
 LANGS_DICT = dict(settings.LANGUAGES)
