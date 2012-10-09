@@ -30,19 +30,19 @@ class DummyTranslation(object):
     """Dummy translations for views to put in template context in case there's no
     actual object"""
 
-    def __init__(self, request, language=None, title=None,):
+    def __init__(self, request, language=None, title=None, path=None):
         self.title = title
         self.request = request
         self.language = language or request.LANGUAGE_CODE
-        self.path = request.path
+        self.path = path or request.path
 
     def get_translations(self):
         for code, name in settings.LANGUAGES:
             if code != self.language:
-                yield DummyTranslation(self.request, code, name)
+                yield DummyTranslation(self.request, code, name, self.path)
 
     def get_language(self):
         return LANGS_DICT.get(self.language)
 
     def get_absolute_url(self):
-        return path_to_lang(self.request.path, self.language)
+        return path_to_lang(self.path, self.language)
