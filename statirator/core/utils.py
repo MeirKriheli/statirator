@@ -6,11 +6,11 @@ import sys
 import functools
 import logging
 import urlparse
-from BeautifulSoup import BeautifulSoup
+from BeautifulSoup import BeautifulSoup, Tag
 from django.conf import settings
 
 
-def content_absolute_links(content):
+def content_absolute_links(content, image=None):
     from django.contrib.sites.models import Site
     current_site = Site.objects.get(pk=settings.SITE_ID)
 
@@ -22,6 +22,10 @@ def content_absolute_links(content):
         return url
 
     soup = BeautifulSoup(content)
+
+    if image:
+        img = Tag(soup, 'img', [('src', image)])
+        soup.insert(0, img)
 
     for link in soup.findAll('a'):
         link['href'] = abs_url(link['href'])

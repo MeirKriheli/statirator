@@ -28,7 +28,7 @@ class PostsFeed(LanguageFeed):
         return item.pubdate
 
     def item_description(self, item):
-        return content_absolute_links(item.content)
+        return content_absolute_links(item.content, item.image)
 
     def item_categories(self, item):
         return item.tags.values_list('name', flat=True)
@@ -60,4 +60,4 @@ class TagFeed(LanguageFeed):
         return item.pubdate
 
     def item_description(self, item):
-        return content_absolute_links(item.content)
+        return content_absolute_links(item.content, item.image)
