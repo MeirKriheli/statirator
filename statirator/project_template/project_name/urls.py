@@ -3,6 +3,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf import settings
 from statirator.blog import views, feeds
 from statirator.pages import views as pviews, sitemap as psitemap
+from statirator.blog import sitemap as bsitemap
 
 # we need to make sure the pages slug won't catch the /en/ etc  for index pages
 # in various languages
@@ -10,6 +11,7 @@ langs_re = '|'.join(x[0] for x in settings.LANGUAGES)
 
 sitemaps = {
     'pages': psitemap.PagesSiteMap,
+    'blog': bsitemap.BlogSiteMap,
 }
 
 urlpatterns = patterns(

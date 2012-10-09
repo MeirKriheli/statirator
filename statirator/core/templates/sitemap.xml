@@ -13,7 +13,7 @@
     {% if url.item.pubdate %}
     <news:news>
       <news:publication_date>{{ url.item.pubdate|date:"Y-m-d" }}</news:publication_date>
-      {% if url.item.tags %}<news:keywords>{{ url.item.tags }}</news:keywords>{% endif %}
+      {% if url.item.tags %}<news:keywords>{{ url.item.tags_list|join:" "}}</news:keywords>{% endif %}
     </news:news>
     {% endif %}
 {% for t in url.item.get_translations %}

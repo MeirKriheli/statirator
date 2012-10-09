@@ -74,3 +74,7 @@ class Post(models.Model, TranslationsMixin):
     def get_previous(self):
         return self.get_previous_by_pubdate(language=self.language,
                                             is_published=True)
+
+    @property
+    def tags_list(self):
+        return self.tags.values_list('name', flat=True)
