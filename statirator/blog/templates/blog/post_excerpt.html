@@ -2,7 +2,7 @@
 {% with post_url=post.get_absolute_url %}
 <article class="post-excerpt">
   <header>
-      <h1><a href="{{ post_url }}">{{ post.title }}</a></h1>
+      <h3><a href="{{ post_url }}">{{ post.title }}</a></h3>
   </header>
 {% if post.image %}
   <div class="post-image"><a href="{{ post_url  }}"><img src="{{ STATIC_URL }}{{ post.image }}" alt="{{ post.title }}"></a></div>

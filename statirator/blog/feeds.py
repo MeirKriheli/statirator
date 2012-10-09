@@ -1,10 +1,11 @@
 from __future__ import absolute_import
+
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
-from statirator.core.syndication import LanguageFeed
-from statirator.core.utils import i18n_reverse
 from .models import Post, I18NTag
+from statirator.core.syndication import LanguageFeed
+from statirator.core.utils import i18n_reverse, content_absolute_links
 
 
 class PostsFeed(LanguageFeed):
@@ -27,8 +28,7 @@ class PostsFeed(LanguageFeed):
         return item.pubdate
 
     def item_description(self, item):
-        # TODO return item excerpt if exists
-        return item.content
+        return content_absolute_links(item.content)
 
     def item_categories(self, item):
         return item.tags.values_list('name', flat=True)
@@ -60,5 +60,4 @@ class TagFeed(LanguageFeed):
         return item.pubdate
 
     def item_description(self, item):
-        # TODO return item excerpt if exists
-        return item.content
+        return content_absolute_links(item.content)

@@ -4,6 +4,31 @@ import logging
 import functools
 
 from django.conf import settings
+from __future__ import absolute_import
+import urlparse
+from BeautifulSoup import BeautifulSoup
+
+
+def content_absolute_links(content):
+    from django.contrib.sites.models import Site
+    current_site = Site.objects.get(pk=settings.SITE_ID)
+
+    def abs_url(url):
+
+        parsed = urlparse.urlparse(url)
+        if parsed.netloc == parsed.scheme == '':
+            url = urlparse.urljoin('http://{0}'.format(current_site.domain), url)
+        return url
+
+    soup = BeautifulSoup(content)
+
+    for link in soup.findAll('a'):
+        link['href'] = abs_url(link['href'])
+
+    for link in soup.findAll('img'):
+        link['src'] = abs_url(link['src'])
+
+    return soup.prettify()
 
 
 LANGS_DICT = dict(settings.LANGUAGES)
