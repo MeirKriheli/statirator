@@ -2,7 +2,8 @@
 <urlset
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
-  xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 {% spaceless %}
 {% for url in urlset %}
   <url>
@@ -12,9 +13,18 @@
     {% if url.priority %}<priority>{{ url.priority }}</priority>{% endif %}
     {% if url.item.pubdate %}
     <news:news>
+      <news:publication>
+        <news:name>{{ url.item.title }}</news:name>
+        <news:language>{{ url.item.language }}</news:language>
+      </news:publication>
       <news:publication_date>{{ url.item.pubdate|date:"Y-m-d" }}</news:publication_date>
-      {% if url.item.tags %}<news:keywords>{{ url.item.tags_list|join:" "}}</news:keywords>{% endif %}
+      {% if url.item.tags %}<news:keywords>{{ url.item.tags_list|join:", "}}</news:keywords>{% endif %}
     </news:news>
+    {% endif %}
+    {% if url.item.image %}
+    <image:image>       
+      <image:loc>http://{{ site.domain }}/{{ url.item.image }}</image:loc>     
+    </image:image>   
     {% endif %}
 {% for t in url.item.get_translations %}
 <xhtml:link rel="alternate" hreflang="{{ t.language }}" href="http://{{ site.domain }}{{ t.get_absolute_url }}" />
