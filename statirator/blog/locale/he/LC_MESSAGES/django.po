@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-08 12:43+0200\n"
-"PO-Revision-Date: 2012-10-08 12:43+0200\n"
+"POT-Creation-Date: 2012-11-08 17:39+0200\n"
+"PO-Revision-Date: 2012-11-08 17:39+0200\n"
 "Last-Translator: Meir Kriheli <mkriheli@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "Language: \n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: feeds.py:13
+#: feeds.py:14
 msgid "Recent posts"
 msgstr "פוסטים אחרונים"
 
@@ -49,22 +49,26 @@ msgstr "%(title_i18n)s %(lang_name)s"
 msgid "%(lang_name)s content goes here"
 msgstr "תוכן %(lang_name)s יבוא כאן"
 
-#: templates/blog/post_detail.html:17
+#: templates/blog/post_detail.html:14
 msgid "Published"
 msgstr "פורסם"
 
-#: templates/blog/post_detail.html:18 templates/blog/tag_list.html:3
+#: templates/blog/post_detail.html:21 templates/blog/tag_list.html:3
 #: templates/blog/tag_list.html.py:10
 msgid "Tags"
 msgstr "תגים"
 
-#: templates/blog/post_detail.html:26
+#: templates/blog/post_detail.html:29
 msgid "Translations"
 msgstr "תרגומים"
 
-#: templates/blog/post_excerpt.html:14 templates/blog/post_excerpt.html:15
+#: templates/blog/post_excerpt.html:14
 msgid "Read more"
 msgstr "קראו עוד"
+
+#: templates/blog/post_excerpt.html:15
+msgid "Comments"
+msgstr "תגובות"
 
 #: templates/blog/post_list.html:3 templates/blog/post_list.html.py:7
 #: templates/blog/post_list.html:15
