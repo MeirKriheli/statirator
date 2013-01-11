@@ -259,6 +259,6 @@ Run the command::
 
     ./manage.py serve
 
-To run and auto regenrate, run:
+To run and auto regenrate, run::
 
     ./manage.py serve -g
