@@ -25,6 +25,14 @@ Reason
   * Use Django_'s `Internationalization and localization`_
 
 
+For users
+-----------
+
+See the `Statirator documentation`_ at Read the Docs.
+
+.. _Statirator documentation: https://statirator.readthedocs.org/en/latest/
+
+
 For developers:
 --------------------
 
