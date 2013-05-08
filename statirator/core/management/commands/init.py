@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import os
+import sys
 
 from django.core.management.base import BaseCommand, CommandError
 from optparse import make_option
@@ -20,8 +21,7 @@ class Command(BaseCommand):
             '--domain', '-d', dest='domain', default='example.com',
             help='Domain name [Default: "%default"]'),
         make_option(
-            '--languages', '-l', dest='languages', default=['he', 'en'],
-            action='append',
+            '--languages', '-l', dest='languages', default='he,en',
             help='Supported languages. [Default: "%default"]'),
         make_option(
             '--timezone', '-z', dest='timezone', default='America/Chicago',
@@ -35,17 +35,29 @@ class Command(BaseCommand):
 
         directory = args[0]
 
-        os.makedirs(directory)
-
-        print("Initializing project structure in", directory)
-
         from django.conf.global_settings import LANGUAGES
-        langs = options.pop('languages')
+
+        the_langs = dict(LANGUAGES)
+
+        langs = options.pop('languages').split(',')
+
+        # we need to keep ordering, for the default language
+        try:
+            languages = [(l, the_langs[l]) for l in langs]
+        except KeyError, e:
+            print("Invalid language specified:", e, end=". ")
+            print("Valid languages are:")
+            for name, desc in LANGUAGES:
+                print(name, '(' + desc + ')')
+            sys.exit(1)
+
+        os.makedirs(directory)
+        print("Initializing project structure in", directory)
 
         extra = {
             'build': 'build',
             'default_lang': langs[0],
-            'languages': [l for l in LANGUAGES if l[0] in langs],
+            'languages': languages,
             'extensions': ('py', ),
             'domain': options['domain'],
             'timezone': options['timezone'],
@@ -64,4 +76,4 @@ class Command(BaseCommand):
         print("\n\tdomain:", options['domain'])
         print("\ttimezone:", options['timezone'])
         print("\ttitle:", options['title'])
-        print("\tlanguages:", ','.join(langs))
+        print("\tlanguages:", ', '.join(langs))
