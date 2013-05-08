@@ -1,12 +1,14 @@
-import os
+from __future__ import print_function
+
 import codecs
-from optparse import make_option
+import os
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.utils import translation
+from optparse import make_option
 
 from statirator.blog.utils import get_blog_dir
 
@@ -58,3 +60,5 @@ class Command(BaseCommand):
                 post_file.write(rendered)
 
             translation.activate(cur_lang)
+
+        print("Created post", os.path.relpath(filename))

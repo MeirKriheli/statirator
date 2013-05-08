@@ -1,5 +1,7 @@
+from __future__ import print_function
+
 import os
-import logging
+
 from django.core.management.base import BaseCommand, CommandError
 from optparse import make_option
 
@@ -19,7 +21,8 @@ class Command(BaseCommand):
             help='Domain name [Default: "%default"]'),
         make_option(
             '--languages', '-l', dest='languages', default=['he', 'en'],
-            action='append', help='Supported languages. [Default: "%default"]'),
+            action='append',
+            help='Supported languages. [Default: "%default"]'),
         make_option(
             '--timezone', '-z', dest='timezone', default='America/Chicago',
             help='Time Zone. [Default: "%default"]'),
@@ -32,8 +35,9 @@ class Command(BaseCommand):
 
         directory = args[0]
 
-        logging.info("Initializing project structure in  %s", directory)
         os.makedirs(directory)
+
+        print("Initializing project structure in", directory)
 
         from django.conf.global_settings import LANGUAGES
         langs = options.pop('languages')
@@ -56,3 +60,8 @@ class Command(BaseCommand):
 
         from django.core.management import call_command
         call_command('startproject', 'conf', directory, **extra)
+
+        print("\n\tdomain:", options['domain'])
+        print("\ttimezone:", options['timezone'])
+        print("\ttitle:", options['title'])
+        print("\tlanguages:", ','.join(langs))
