@@ -61,11 +61,13 @@ class Post(models.Model, TranslationsMixin):
 
     @i18n_permalink
     def get_absolute_url(self):
-        return ('blog_post', (), {
-            'year': self.pubdate.year,
-            'month': self.pubdate.strftime('%m'),
-            'slug': self.slug,
-        })
+        from .utils import get_post_urlpattern_keys
+
+        keys = get_post_urlpattern_keys()
+
+        kwargs = {k: getattr(self, k) for k in keys}
+
+        return ('blog_post', (), kwargs)
 
     def get_next(self):
         return self.get_next_by_pubdate(language=self.language,
@@ -78,3 +80,17 @@ class Post(models.Model, TranslationsMixin):
     @property
     def tags_list(self):
         return self.tags.values_list('name', flat=True)
+
+    @property
+    def year(self):
+        return self.pubdate.year
+
+    @property
+    def month(self):
+        """Get a 2 digit formatted month"""
+        return self.pubdate.strftime('%m')
+
+    @property
+    def day(self):
+        """Get a 2 digit formatted day"""
+        return self.pubdate.strftime('%d')
