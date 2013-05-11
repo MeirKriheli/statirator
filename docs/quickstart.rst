@@ -24,7 +24,7 @@ command reference::
     -d DOMAIN, --domain=DOMAIN
                             Domain name [Default: "example.com"]
     -l LANGUAGES, --languages=LANGUAGES
-                            Supported languages. [Default: "['he', 'en']"]
+                            Supported languages. [Default: "he,en"]
     -z TIMEZONE, --timezone=TIMEZONE
                             Time Zone. [Default: "America/Chicago"]
 
