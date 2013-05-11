@@ -29,6 +29,12 @@ Reason
   * Hack around i18n bits of Django_.
   * Use Django_'s `Internationalization and localization`_
 
+
+Source Code
+------------
+
+For the project from GitHub: https://github.com/MeirKriheli/statirator
+
 Contents:
 
 .. _Django: https://www.djangoproject.com/
