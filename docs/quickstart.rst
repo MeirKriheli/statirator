@@ -108,6 +108,7 @@ Use the ``create_post`` management command. reference::
 So for example::
 
     $ ./manage.py create_post "Welcome to my blog"
+    Created post blog/welcome-to-my-blog.rst
 
 Will create a stub for that blog post:
 
