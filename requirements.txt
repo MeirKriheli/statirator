@@ -1,6 +1,6 @@
 Jinja2==2.6
-Pygments==1.5
-distribute==0.6.24
+Pygments==1.6
+distribute==0.6.38
 docutils==0.10
 html5writer==0.1
 django-medusa==0.1.dev
