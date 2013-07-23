@@ -3,3 +3,9 @@ distribute==0.6.38
 docutils==0.10
 html5writer==0.1
 django-medusa==0.1.dev
+Django==1.4.1
+django-taggit
+django-medusa
+django-disqus
+django-bidi-utils
+BeautifulSoup
