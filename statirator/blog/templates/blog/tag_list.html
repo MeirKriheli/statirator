@@ -8,12 +8,12 @@
 <section>
   <header>
     <h1>{% trans "Tags" %}</h1>
-    {% get_current_language as LANGUAGE_CODE %}{% get_tagcloud LANGUAGE_CODE as tags %}
-    <ul>
-    {% for tag in tags %}
-      <li><a clsss="tag-{{tag.weight|floatformat:0}}" href="{{ tag.get_absolute_url }}">{{ tag.name }}</a></li>    
-    {% endfor %}
-    </ul>
   </header>
+  {% get_current_language as LANGUAGE_CODE %}{% get_tagcloud LANGUAGE_CODE as tags %}
+  <ul class="tags-cloud">
+  {% for tag in tags %}
+    <li><a class="tag-{{tag.weight|floatformat:0}}" href="{{ tag.get_absolute_url }}">{{ tag.name }}</a></li>    
+  {% endfor %}
+  </ul>
 </section>
 {% endblock %}
