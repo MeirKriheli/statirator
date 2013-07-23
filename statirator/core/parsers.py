@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
 import re
 from datetime import datetime
-from docutils.core import publish_doctree, publish_from_doctree, publish_parts
+from docutils.core import publish_doctree, publish_from_doctree
 from docutils.nodes import docinfo
 from html5writer import html5writer
-
-
-def _publish_body(source):
-    """Returns the published body of rst source"""
-    content = publish_parts(source, writer=html5writer.SemanticHTML5Writer())
-    return content['body']
 
 
 FIELDS = {
@@ -21,6 +15,10 @@ FIELDS = {
     'datetime': lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S'),
     'excerpt': None,
     'image': None,
+}
+
+DEFAULTS = {
+    'syntax_highlight': 'short',
 }
 
 
@@ -61,9 +59,11 @@ def parse_rst(content):
 
         The content of the post in Hebrew
 
-    Returned value is a genearator:
+    Returned value is a genearator::
 
-    (common metadata, '', content), (metadata, title, content), (metadata, title, content) ...
+        (common metadata, '', content),
+        (metadata, title, content),
+        (metadata, title, content) ...
     """
 
     parts = re.split(r'^\.\.\s+--\s*$', content, flags=re.M)
@@ -73,7 +73,7 @@ def parse_rst(content):
         title = ''
         metadata = {}
 
-        tree = publish_doctree(part)
+        tree = publish_doctree(part, settings_overrides=DEFAULTS)
 
         for info in tree.traverse(docinfo):
             for field in info.children:
