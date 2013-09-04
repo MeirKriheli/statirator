@@ -2,25 +2,18 @@
 <urlset
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
-  xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
   xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 {% spaceless %}
 {% for url in urlset %}
   <url>
     <loc>{{ url.location }}</loc>
-    {% if url.lastmod %}<lastmod>{{ url.lastmod|date:"Y-m-d" }}</lastmod>{% endif %}
+    {% if url.lastmod %}
+    <lastmod>{{ url.lastmod|date:"Y-m-d" }}</lastmod>
+    {% elif url.item.pubdate %}
+    <lastmod>{{ url.item.pubdate|date:"Y-m-d" }}</lastmod>
+    {% endif %}
     {% if url.changefreq %}<changefreq>{{ url.changefreq }}</changefreq>{% endif %}
     {% if url.priority %}<priority>{{ url.priority }}</priority>{% endif %}
-    {% if url.item.pubdate %}
-    <news:news>
-      <news:publication>
-        <news:name>{{ url.item.title }}</news:name>
-        <news:language>{{ url.item.language }}</news:language>
-      </news:publication>
-      <news:publication_date>{{ url.item.pubdate|date:"Y-m-d" }}</news:publication_date>
-      {% if url.item.tags %}<news:keywords>{{ url.item.tags_list|join:", "}}</news:keywords>{% endif %}
-    </news:news>
-    {% endif %}
     {% if url.item.image %}
     <image:image>       
       <image:loc>http://{{ site.domain }}/{{ url.item.image }}</image:loc>     
