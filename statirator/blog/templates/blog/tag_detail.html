@@ -13,9 +13,15 @@
   <header>
   <h1>{% blocktrans with object.name as tag_name %}Posts tagged with {{ tag_name }}{% endblocktrans %}</h1>
   </header>
+  {% regroup posts by pubdate|date:"Y" as year_posts %}
     <ul>
-{% for post in posts %}
-        <li><a href="{{post.get_absolute_url}}">{{ post.title }}</a></li>
+{% for year in year_posts %}
+  <li><h2>{{ year.grouper  }}</h2></li>
+  <ul>
+  {% for post in year.list %}
+    <li>{{ post.pubdate|date:"b d" }}, {{LANGUAGE_MARKER}}<a href="{{ post.get_absolute_url  }}">{{ post.title }}</a></li>
+  {% endfor %}
+  </ul>
 {% endfor %}
     </ul>
 </article>
