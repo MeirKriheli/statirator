@@ -95,6 +95,10 @@ POSTS_IN_INDEX = 2
 DISQUS_API_KEY = ''
 DISQUS_WEBSITE_SHORTNAME = ''
 
+# Compensate for some changes in django 1.6
+SECRET_KEY = 'dummy'
+ALLOWED_HOSTS = ['*']
+
 # Optionally place sensitive settings, which shoulen't be tracked by version
 # control (e.g: Secret API keys, etc) in local_settings.py. Make sure to have
 # that file ignored.
